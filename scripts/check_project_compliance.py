@@ -46,7 +46,7 @@ def parse_exception_ids(config_path: Path) -> set[str]:
     text = read_text(config_path)
     return set(
         match.group(1)
-        for match in re.finditer(r"^\\s*-\\s*rule:\\s*[\\\"\']?([A-Za-z0-9_.-]+)", text, re.MULTILINE)
+        for match in re.finditer(r"^\s*-\s*rule:\s*[\"\']?([A-Za-z0-9_.-]+)", text, re.MULTILINE)
     )
 
 
