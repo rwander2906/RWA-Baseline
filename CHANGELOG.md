@@ -19,6 +19,7 @@
 - Baseline-Ausnahmen sollen langfristig über stabile Regel-IDs adressiert werden
 
 ### Migration
+- Machine-readable migration manifest: `migrations/1.0.0.json`
 - bestehende Projekte erhalten `.rwa-baseline.yml`
 - Issues bleiben bis zur Promotion nach `main` offen
 - CI um Dependency-/Security-Prüfung und Least-Privilege prüfen
