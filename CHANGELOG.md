@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0-rc.1 - 2026-10-03
+## 1.0.0 - 2026-10-03
 
 ### Added
 - Source-of-Truth-Hierarchie für Issue, PR, dauerhafte Dokumentation und Changelog
