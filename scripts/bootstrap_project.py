@@ -205,10 +205,16 @@ Project initialized from RWA Baseline {BASELINE_VERSION}.
         "project_slug": slug,
     }
 
+    def render(template: str) -> str:
+        rendered = template
+        for key, value in values.items():
+            rendered = rendered.replace("{" + key + "}", value)
+        return rendered
+
     for path, template in COMMON_FILES.items():
-        files[path] = template.format(**values)
+        files[path] = render(template)
     for path, template in PROFILE_FILES[args.profile].items():
-        files[path] = template.format(**values)
+        files[path] = render(template)
 
     return files
 
