@@ -29,3 +29,6 @@ jobs:
 
       - name: Validate baseline structure
         run: python scripts/check_baseline.py
+
+      - name: Test baseline tooling
+        run: python -m unittest discover -s tests -v
