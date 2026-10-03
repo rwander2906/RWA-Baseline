@@ -12,9 +12,10 @@ Die Baseline bündelt wiederverwendbare Regeln für Entwicklungsprozess, Qualit�
 - explizite Freigabe vor Promotion nach `main`
 - grüne CI als Merge-Voraussetzung
 - Tests und Regressionstests als Teil der Änderung
-- messbare Coverage- und Complexity-Gates
+- messbare Coverage- und Complexity-Gates bzw. dokumentierte Ratchets
 - keine neuen Warnings
-- zentrale Logging- und Secret-Regeln
+- zentrale Logging-, Datenschutz- und Secret-Regeln
+- Dependency-/Security-Prüfung und Least-Privilege-CI
 - Dokumentation und Definition of Done sind Bestandteil der Entwicklung
 - technische Schulden werden als Issues sichtbar gemacht
 - Baseline-Abweichungen werden explizit dokumentiert, nicht stillschweigend gelebt
@@ -27,7 +28,7 @@ Die Baseline folgt Semantic Versioning:
 - MINOR: neue oder verschärfte Regeln, die Adoption-Arbeit erzeugen können
 - MAJOR: grundlegende Änderungen am Entwicklungsmodell
 
-Aktueller Entwurfsstand: **0.1.0**. Ziel: **1.0.0** nach Review der aus INES und SLA-Report-Gen abgeleiteten Regeln.
+Aktueller stabiler Stand: **1.0.0**.
 
 ## Nutzung in Projekten
 
@@ -41,10 +42,15 @@ baseline:
 profile:
   language: "python"
 
+quality:
+  coverage_minimum: 80
+  complexity_maximum: 12
+  warnings_allowed: 0
+
 exceptions: []
 ```
 
-Abweichungen müssen begründet, möglichst mit Issue versehen und regelmäßig überprüft werden.
+Legacy-Projekte dürfen begründet mit niedrigeren Messwerten starten. Entscheidend sind dokumentierte Istwerte, funktionierende Gates/Ratchets und ein nachvollziehbarer Verbesserungsweg.
 
 ## Struktur
 
@@ -56,4 +62,6 @@ Abweichungen müssen begründet, möglichst mit Issue versehen und regelmäßig 
 
 ## Herkunft
 
-Baseline 0.1 wurde aus den praktischen Erfahrungen und Qualitätsregeln von INES und SLA-Report-Gen abgeleitet. Projektspezifische Regeln wurden bewusst vom allgemeinen Standard getrennt.
+Baseline 1.0 wurde aus den praktischen Erfahrungen und Qualitätsregeln von INES und SLA-Report-Gen abgeleitet. Projektspezifische Regeln wurden bewusst vom allgemeinen Standard getrennt.
+
+Für die Übernahme in bestehende Projekte siehe [Migration auf Baseline 1.0](docs/MIGRATION_1_0.md).

@@ -27,18 +27,36 @@ Externe Eingaben gelten als nicht vertrauenswürdig. Dazu gehören insbesondere 
 
 Fehler dürfen nicht unbemerkt verschwinden. Jeder Fehlerpfad muss mindestens einen kontrollierten Zweck erfüllen: sinnvolles Logging, definierter Fallback, fachliche Fehlerübersetzung oder bewusst dokumentiertes Ignorieren. Leere Catch-/Except-Blöcke sind verboten.
 
-## 6. Persistenz
+Asynchrone Arbeit muss so behandelt werden, dass Fehler nicht unbemerkt verloren gehen.
+
+## 6. Zustandsänderungen und Persistenz
+
+Zustandsänderungen sollen an wenigen, klar definierten Stellen stattfinden. Unkontrollierte Mutation über mehrere Module ist zu vermeiden.
 
 Persistente Dateien sollen atomar geschrieben werden. Ein fehlgeschlagener Schreibvorgang darf einen zuvor gültigen Zustand nicht beschädigen. Schemaänderungen sollen möglichst rückwärtskompatibel und migrationsfähig sein.
 
+Bei Anwendungen mit `staging` und `production` werden Runtime-Daten, Sessions und persistenter Zustand standardmäßig getrennt. Gemeinsamer Zustand ist nur zulässig, wenn er fachlich notwendig, dokumentiert und bewusst entschieden ist.
+
 ## 7. Abhängigkeiten
 
-Neue Dependencies werden nur aufgenommen, wenn ihr Nutzen den Wartungsaufwand rechtfertigt. Vor Aufnahme sind Wartungszustand, Security, Lizenz, transitive Abhängigkeiten und vorhandene Alternativen zu prüfen.
+Neue Dependencies werden nur aufgenommen, wenn ihr Nutzen den Wartungsaufwand rechtfertigt. Vor Aufnahme sind Wartungszustand, Security, Lizenz, Größe/transitive Abhängigkeiten und vorhandene Alternativen zu prüfen.
 
-## 8. Dead Code
+Reproduzierbare Installationen mit Lockfile oder äquivalentem Mechanismus sind zu bevorzugen.
+
+## 8. Konfiguration und Magic Values
+
+Fachlich relevante Grenzwerte, Timeouts, Retry-Zahlen, Statuswerte, feste Pfade und vergleichbare Werte werden als benannte Konstanten oder Konfiguration geführt.
+
+Konfiguration und Secrets werden getrennt behandelt.
+
+## 9. Öffentliche APIs und Kopplung
+
+Module exportieren nur Funktionen oder Typen, die tatsächlich außerhalb des Moduls benötigt werden. Interne Hilfsfunktionen bleiben intern.
+
+## 10. Dead Code
 
 Nicht mehr verwendeter Code wird gelöscht. Git ist die Historie. Auskommentierte Altimplementierungen, dauerhaft deaktivierte Codeblöcke und ungenutzte Imports/Parameter werden nicht als Archiv im Quelltext behalten.
 
-## 9. Backward Compatibility
+## 11. Backward Compatibility
 
 Breaking Changes werden bewusst beschlossen, dokumentiert, versioniert und nach Möglichkeit migrationsfähig umgesetzt.
