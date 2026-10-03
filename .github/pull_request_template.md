@@ -13,11 +13,12 @@ Refs #
 - [ ] Regressionstest bei Bugfix oder nicht erforderlich
 - [ ] Lint/statische Analyse grün
 - [ ] Compile/Syntax grün oder nicht anwendbar
-- [ ] Complexity grün
-- [ ] Coverage grün
+- [ ] Complexity/Ratchet grün
+- [ ] Coverage/Ratchet grün
+- [ ] Dependency-/Security-Prüfung grün
 - [ ] Dokumentation geprüft
-- [ ] Logging/Secrets geprüft
-- [ ] Smoke-Test durchgeführt oder nicht erforderlich
+- [ ] Logging/Datenschutz/Secrets geprüft
+- [ ] Smoke-/Staging-Test durchgeführt oder nicht erforderlich
 
 ## Baseline
 
@@ -27,5 +28,8 @@ Refs #
 
 Nur für PRs `staging -> main`:
 
-- [ ] ausdrückliche Freigabe liegt vor
-- [ ] Promotion-Gate/Label gesetzt
+- [ ] ausdrückliche Freigabe für diese Promotion liegt vor
+- [ ] Label `promotion-approved` gesetzt
+- [ ] Release-/Deployment-Auswirkungen geprüft
+
+Arbeits-PRs nach `staging` verwenden `Refs #N`. Das Issue wird erst mit der Promotion nach `main` geschlossen.
