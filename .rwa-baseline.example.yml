@@ -1,0 +1,13 @@
+baseline:
+  version: "0.1.0"
+  adopted: "2026-10-03"
+
+profile:
+  language: "python"
+
+quality:
+  coverage_minimum: 80
+  complexity_maximum: 12
+  warnings_allowed: 0
+
+exceptions: []
