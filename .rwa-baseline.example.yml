@@ -1,6 +1,6 @@
 baseline:
-  version: "0.1.0"
-  adopted: "2026-10-03"
+  version: "1.0.0"
+  adopted: "YYYY-MM-DD"
 
 profile:
   language: "python"
@@ -10,4 +10,9 @@ quality:
   complexity_maximum: 12
   warnings_allowed: 0
 
-exceptions: []
+exceptions:
+  # - rule: "quality.coverage.minimum"
+  #   value: 60
+  #   reason: "Legacy project; current measured baseline."
+  #   issue: "#123"
+  []
