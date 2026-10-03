@@ -44,7 +44,7 @@ Document only project-specific additions or justified deviations here. General e
 PROFILE_FILES = {
     "python": {
         "requirements-dev.txt": "coverage\nruff\nradon\n",
-        "tests/test_smoke.py": """"""Initial bootstrap smoke test."""
+        "tests/test_smoke.py": '''"""Initial bootstrap smoke test."""
 
 import unittest
 
@@ -56,14 +56,7 @@ class SmokeTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-""",
-        "test/smoke.test.js": """import test from "node:test";
-import assert from "node:assert/strict";
-
-test("project bootstrap smoke test", () => {
-  assert.equal(1 + 1, 2);
-});
-""",
+''',
         ".github/workflows/ci.yml": """name: CI
 
 on:
@@ -96,11 +89,32 @@ jobs:
   "name": "{project_slug}",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "test": "node --test",
     "lint": "eslint . --max-warnings=0"
+  },
+  "devDependencies": {
+    "eslint": "10.10.0"
   }
 }
+""",
+        "eslint.config.js": """export default [
+  {
+    files: ["**/*.js"],
+    rules: {
+      "no-unused-vars": "error",
+      "no-undef": "error"
+    }
+  }
+];
+""",
+        "test/smoke.test.js": """import test from "node:test";
+import assert from "node:assert/strict";
+
+test("project bootstrap smoke test", () => {
+  assert.equal(1 + 1, 2);
+});
 """,
         ".github/workflows/ci.yml": """name: CI
 
@@ -121,13 +135,11 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
-      - name: Check JavaScript syntax
-        shell: bash
-        run: |
-          set -euo pipefail
-          while IFS= read -r -d '' file; do
-            node --check "$file"
-          done < <(find . -type f -name '*.js' -not -path './node_modules/*' -print0 | sort -z)
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm audit --audit-level=high
+      - run: npm run lint
       - run: npm test
 """,
     },
@@ -193,10 +205,10 @@ Project initialized from RWA Baseline {BASELINE_VERSION}.
         "project_slug": slug,
     }
 
-    for path, content in COMMON_FILES.items():
-        files[path] = content.format(**values)
-    for path, content in PROFILE_FILES[args.profile].items():
-        files[path] = content.format(**values)
+    for path, template in COMMON_FILES.items():
+        files[path] = template.format(**values)
+    for path, template in PROFILE_FILES[args.profile].items():
+        files[path] = template.format(**values)
 
     return files
 
@@ -221,13 +233,37 @@ def write_files(target: Path, files: dict[str, str], dry_run: bool) -> None:
         destination.write_text(content, encoding="utf-8")
 
 
+def finalize_profile(target: Path, profile: str, dry_run: bool) -> None:
+    if profile != "node":
+        return
+
+    npm = shutil.which("npm")
+    if npm is None:
+        raise RuntimeError(
+            "Node profile requires npm to generate package-lock.json reproducibly."
+        )
+
+    command = [
+        npm,
+        "install",
+        "--package-lock-only",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+    ]
+    print(("WOULD RUN " if dry_run else "RUN ") + " ".join(command))
+    if not dry_run:
+        subprocess.run(command, cwd=target, check=True)
+
+
 def configure_github(repo: str, dry_run: bool) -> None:
-    if shutil.which("gh") is None:
+    gh = shutil.which("gh")
+    if gh is None:
         raise RuntimeError("GitHub configuration requested, but gh CLI is not installed.")
 
     commands = [
-        ["gh", "repo", "edit", repo, "--delete-branch-on-merge"],
-        ["gh", "api", f"repos/{repo}", "--method", "PATCH", "-f", "allow_auto_merge=true"],
+        [gh, "repo", "edit", repo, "--delete-branch-on-merge"],
+        [gh, "api", f"repos/{repo}", "--method", "PATCH", "-f", "allow_auto_merge=true"],
     ]
 
     for command in commands:
@@ -242,6 +278,7 @@ def main() -> int:
 
     try:
         write_files(args.target, files, args.dry_run)
+        finalize_profile(args.target, args.profile, args.dry_run)
         if args.configure_github:
             if not args.github_repo:
                 raise RuntimeError("--configure-github requires --github-repo owner/repo")
