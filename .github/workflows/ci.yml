@@ -1,0 +1,31 @@
+name: Baseline CI
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    branches:
+      - main
+      - staging
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Compile validation tooling
+        run: python -m compileall -q scripts
+
+      - name: Validate baseline structure
+        run: python scripts/check_baseline.py
