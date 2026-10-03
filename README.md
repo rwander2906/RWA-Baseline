@@ -28,7 +28,7 @@ Die Baseline folgt Semantic Versioning:
 - MINOR: neue oder verschärfte Regeln, die Adoption-Arbeit erzeugen können
 - MAJOR: grundlegende Änderungen am Entwicklungsmodell
 
-Aktueller Stand auf diesem Arbeitsbranch: **1.0.0-rc.1**.
+Aktueller stabiler Stand: **1.0.0**.
 
 ## Nutzung in Projekten
 
