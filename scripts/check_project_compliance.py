@@ -91,6 +91,18 @@ def evaluate_rule(root: Path, rule: dict[str, Any]) -> tuple[bool, str]:
                 return True, f"matched in {path.relative_to(root)}"
         return False, f"no file matching {rule['path']} contains all required tokens"
 
+    if check == "glob_each_contains_all":
+        files = matching_files(root, rule["path"])
+        if not files:
+            return False, f"no files matching {rule['path']}"
+        failures = []
+        for path in files:
+            text = read_text(path)
+            missing = [token for token in rule["tokens"] if token not in text]
+            if missing:
+                failures.append(f"{path.relative_to(root)} missing {', '.join(missing)}")
+        return not failures, "; ".join(failures) if failures else f"validated {len(files)} file(s)"
+
     if check == "forbidden_globs":
         matches: list[str] = []
         for path in root.rglob("*"):
