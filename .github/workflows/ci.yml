@@ -32,3 +32,6 @@ jobs:
 
       - name: Test baseline tooling
         run: python -m unittest discover -s tests -v
+
+      - name: Check baseline repository compliance
+        run: python scripts/check_project_compliance.py .
