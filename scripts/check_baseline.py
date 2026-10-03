@@ -22,11 +22,13 @@ REQUIRED_FILES = [
     "docs/LOGGING_SECURITY.md",
     "docs/MIGRATION_1_0.md",
     "docs/RELEASES.md",
+    "docs/REPOSITORY_SETTINGS.md",
     "docs/TESTING_AND_QUALITY.md",
     ".github/pull_request_template.md",
     ".github/ISSUE_TEMPLATE/bug.yml",
     ".github/ISSUE_TEMPLATE/feature.yml",
     ".github/workflows/promotion-gate.yml",
+    ".github/workflows/ci.yml",
 ]
 
 VERSION_RE = re.compile(r"^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$")
