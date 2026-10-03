@@ -47,10 +47,10 @@ def read_baseline_version(config_path: Path) -> str:
         raise RuntimeError(f"Missing baseline declaration: {config_path}")
 
     text = config_path.read_text(encoding="utf-8")
-    match = re.search(r"^\s*version:\s*["']?([0-9A-Za-z.-]+)", text, re.MULTILINE)
+    match = re.search(r"^\s*version:\s*(\S+)", text, re.MULTILINE)
     if not match:
         raise RuntimeError(f"No baseline.version found in {config_path}")
-    return match.group(1)
+    return match.group(1).strip("\"'")
 
 
 def read_exceptions(config_path: Path) -> list[dict[str, str]]:
@@ -62,19 +62,19 @@ def read_exceptions(config_path: Path) -> list[dict[str, str]]:
 
     for raw_line in config_path.read_text(encoding="utf-8").splitlines():
         line = raw_line.strip()
-        rule_match = re.match(r"-\s*rule:\s*["']?([^"']+)", line)
+        rule_match = re.match(r"-\s*rule:\s*(.+)", line)
         if rule_match:
             if current:
                 exceptions.append(current)
-            current = {"rule": rule_match.group(1).strip()}
+            current = {"rule": rule_match.group(1).strip().strip("\"'")}
             continue
 
         if current is None:
             continue
 
-        field_match = re.match(r"(value|reason|issue):\s*["']?(.*?)["']?$", line)
+        field_match = re.match(r"(value|reason|issue):\s*(.*)", line)
         if field_match:
-            current[field_match.group(1)] = field_match.group(2).strip()
+            current[field_match.group(1)] = field_match.group(2).strip().strip("\"'")
 
     if current:
         exceptions.append(current)
