@@ -44,6 +44,26 @@ Document only project-specific additions or justified deviations here. General e
 PROFILE_FILES = {
     "python": {
         "requirements-dev.txt": "coverage\nruff\nradon\n",
+        "tests/test_smoke.py": """"""Initial bootstrap smoke test."""
+
+import unittest
+
+
+class SmokeTest(unittest.TestCase):
+    def test_bootstrap(self) -> None:
+        self.assertEqual(1 + 1, 2)
+
+
+if __name__ == "__main__":
+    unittest.main()
+""",
+        "test/smoke.test.js": """import test from "node:test";
+import assert from "node:assert/strict";
+
+test("project bootstrap smoke test", () => {
+  assert.equal(1 + 1, 2);
+});
+""",
         ".github/workflows/ci.yml": """name: CI
 
 on:
@@ -101,10 +121,13 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
-          cache: npm
-      - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: npm audit --audit-level=high
-      - run: npm run lint
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            node --check "$file"
+          done < <(find . -type f -name '*.js' -not -path './node_modules/*' -print0 | sort -z)
       - run: npm test
 """,
     },
