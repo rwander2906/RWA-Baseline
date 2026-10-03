@@ -1,0 +1,17 @@
+name: Promotion Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+jobs:
+  promotion-gate:
+    name: Main promotion approved
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require explicit promotion approval
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'promotion-approved') }}
+        run: |
+          echo "::error::Promotion to main requires explicit approval and the promotion-approved label."
+          exit 1
