@@ -10,7 +10,9 @@ Jedes Projekt dokumentiert die verwendete RWA-Baseline-Version in `.rwa-baseline
 4. sofort umsetzbare Punkte übernehmen
 5. größere technische Schulden als Issues erfassen
 6. begründete Ausnahmen in `.rwa-baseline.yml` dokumentieren
-7. Baseline-Version als adoptiert markieren
+7. prüfen, ob Build-, Betriebs-, Konfigurations- und Migrationswissen ohne Chat-/KI-Kontext aus dem Repository nachvollziehbar ist
+8. prüfen, ob das Projekt ohne KI-Dienst gebaut, getestet, betrieben und von einem kompetenten Entwickler weiterentwickelt werden kann
+9. Baseline-Version als adoptiert markieren
 
 Eine Adoption verlangt nicht, dass ein Legacy-Projekt sofort jeden Zielwert erfüllt. Sie verlangt, dass jede Abweichung entweder behoben, als technische Schuld erfasst oder ausdrücklich begründet ist.
 
