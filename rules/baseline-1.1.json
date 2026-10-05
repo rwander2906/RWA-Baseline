@@ -126,6 +126,18 @@
       ]
     },
     {
+      "id": "docs.human_maintainability",
+      "description": "Project guidelines explicitly preserve human maintainability without AI dependency",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/PROJECT_GUIDELINES.md",
+      "tokens": [
+        "Human Maintainability",
+        "without an AI service",
+        "Critical project knowledge"
+      ]
+    },
+    {
       "id": "security.dependabot.config",
       "description": "Automated dependency updates are configured",
       "severity": "error",
