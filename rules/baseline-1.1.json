@@ -1,0 +1,149 @@
+{
+  "baseline_version": "1.1.0",
+  "rules": [
+    {
+      "id": "meta.baseline.file",
+      "description": "Project declares its adopted RWA Baseline in .rwa-baseline.yml",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".rwa-baseline.yml"
+    },
+    {
+      "id": "docs.readme",
+      "description": "README is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "README.md"
+    },
+    {
+      "id": "docs.changelog",
+      "description": "CHANGELOG is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "id": "docs.architecture",
+      "description": "Architecture documentation is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "docs/ARCHITECTURE.md"
+    },
+    {
+      "id": "github.pr_template",
+      "description": "Pull request template is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".github/pull_request_template.md"
+    },
+    {
+      "id": "github.issue_templates",
+      "description": "At least one issue template is present",
+      "severity": "error",
+      "check": "glob_exists",
+      "path": ".github/ISSUE_TEMPLATE/*"
+    },
+    {
+      "id": "github.ci",
+      "description": "At least one CI workflow is present",
+      "severity": "error",
+      "check": "glob_exists",
+      "path": ".github/workflows/*.yml"
+    },
+    {
+      "id": "workflow.promotion_gate",
+      "description": "Promotion gate enforces promotion-approved for main",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": ".github/workflows/promotion-gate.yml",
+      "tokens": [
+        "promotion-approved",
+        "github.base_ref == 'main'"
+      ]
+    },
+    {
+      "id": "quality.coverage.minimum",
+      "description": "Coverage gate is configured or explicitly excepted",
+      "severity": "error",
+      "check": "glob_contains_any",
+      "path": ".github/workflows/*.yml",
+      "tokens": [
+        "fail-under",
+        "coverage report",
+        "pytest --cov",
+        "--cov-fail-under"
+      ]
+    },
+    {
+      "id": "quality.complexity.maximum",
+      "description": "Complexity gate is configured or explicitly excepted",
+      "severity": "error",
+      "check": "glob_contains_any",
+      "path": ".github/workflows/*.yml",
+      "tokens": [
+        "complexity",
+        "radon",
+        "lizard"
+      ]
+    },
+    {
+      "id": "security.ci.least_privilege",
+      "description": "CI workflows declare read-only contents permission",
+      "severity": "error",
+      "check": "glob_each_contains_all",
+      "path": ".github/workflows/*.yml",
+      "tokens": [
+        "permissions:",
+        "contents: read"
+      ]
+    },
+    {
+      "id": "security.secret_files",
+      "description": "No obvious secret files are tracked",
+      "severity": "error",
+      "check": "forbidden_globs",
+      "paths": [
+        ".env",
+        "*.pem",
+        "*.key",
+        "id_rsa",
+        "id_ed25519"
+      ]
+    },
+    {
+      "id": "docs.baseline_reference",
+      "description": "Project guidelines reference the RWA Baseline or an exception is documented",
+      "severity": "warning",
+      "check": "any_file_contains",
+      "paths": [
+        "README.md",
+        "docs/PROJECT_GUIDELINES.md",
+        "docs/CODING_GUIDELINES.md"
+      ],
+      "tokens": [
+        "RWA Baseline",
+        "RWA-Baseline"
+      ]
+    },
+    {
+      "id": "security.dependabot.config",
+      "description": "Automated dependency updates are configured",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".github/dependabot.yml"
+    },
+    {
+      "id": "workflow.dependabot.issue-tracker",
+      "description": "Dependabot pull requests are documented as backlog issues",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": ".github/workflows/dependabot-issue-tracker.yml",
+      "tokens": [
+        "pull_request_target",
+        "dependabot[bot]",
+        "issues: write",
+        "rwa-dependabot-pr"
+      ]
+    }
+  ]
+}
