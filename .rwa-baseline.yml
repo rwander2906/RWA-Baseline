@@ -17,3 +17,6 @@ exceptions:
   - rule: "quality.complexity.maximum"
     value: null
     reason: "No application runtime; complexity threshold becomes relevant for bootstrap/compliance tooling."
+  - rule: "docs.human_maintainability"
+    value: null
+    reason: "The baseline repository is the source of the project guidelines; generated/adopting application projects carry the explicit Human Maintainability contract in docs/PROJECT_GUIDELINES.md."

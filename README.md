@@ -4,6 +4,15 @@ Zentraler Engineering-Standard für Softwareprojekte von RWA.
 
 Die Baseline bündelt wiederverwendbare Regeln für Entwicklungsprozess, Qualität, Tests, Dokumentation, Security, Logging, Releases und Refactoring. Projektspezifische Repositories referenzieren eine konkrete Baseline-Version und dokumentieren nur Ergänzungen oder begründete Abweichungen.
 
+
+## Human Maintainability
+
+Ein Baseline-Projekt muss von einem kompetenten Entwickler ohne Kenntnis seiner Entstehungsgeschichte und ohne KI übernommen, verstanden, gebaut, getestet, betrieben und weiterentwickelt werden können.
+
+Kritisches Projektwissen gehört deshalb ins Repository und in reproduzierbare Prozesse, nicht ausschließlich in Chats, Prompts oder persönliches Wissen. KI darf Entwicklung und Review unterstützen, ist aber keine Voraussetzung für Build, Betrieb oder Weiterentwicklung.
+
+Neue Baseline-Regeln müssen einen nachvollziehbaren Beitrag zu Wartbarkeit, Qualität, Sicherheit oder reproduzierbaren Prozessen leisten. Regeln ohne solchen Nutzen werden nicht allein der Standardisierung wegen eingeführt.
+
 ## Leitprinzipien
 
 - issue-driven development
