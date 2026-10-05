@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0-rc.1 - 2026-10-05
+## 1.1.0 - 2026-10-05
 
 ### Added
 - Dependabot-PRs werden automatisch als verknüpfte GitHub-Issues dokumentiert.
