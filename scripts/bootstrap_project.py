@@ -8,7 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-BASELINE_VERSION = "1.0.0"
+BASELINE_VERSION = "1.1.0"
 
 COMMON_FILES = {
     ".rwa-baseline.yml": """baseline:
@@ -43,6 +43,17 @@ Document only project-specific additions or justified deviations here. General e
 
 PROFILE_FILES = {
     "python": {
+        ".github/dependabot.yml": """version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+""",
         "requirements-dev.txt": "coverage\nruff\nradon\n",
         "tests/test_smoke.py": '''"""Initial bootstrap smoke test."""
 
@@ -85,6 +96,17 @@ jobs:
 """,
     },
     "node": {
+        ".github/dependabot.yml": """version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+""",
         "package.json": """{
   "name": "{project_slug}",
   "version": "0.1.0",
@@ -196,6 +218,9 @@ Project initialized from RWA Baseline {BASELINE_VERSION}.
         ".github/ISSUE_TEMPLATE/feature.yml": load_baseline_template(".github/ISSUE_TEMPLATE/feature.yml"),
         ".github/workflows/promotion-gate.yml": load_baseline_template(
             ".github/workflows/promotion-gate.yml"
+        ),
+        ".github/workflows/dependabot-issue-tracker.yml": load_baseline_template(
+            ".github/workflows/dependabot-issue-tracker.yml"
         ),
     }
 

@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0 - 2026-10-05
+
+### Added
+- Dependabot-PRs werden automatisch als verknüpfte GitHub-Issues dokumentiert.
+- Baseline-Regel `workflow.dependabot.issue-tracker`.
+- Dependabot-Konfiguration als verpflichtender Bestandteil aktiv gepflegter Projekte.
+- Bootstrap übernimmt Dependabot-Konfiguration und Issue-Tracking-Workflow.
+- Compliance-Check wählt den Regelkatalog passend zur adoptierten Baseline-Version.
+
+### Migration
+- Machine-readable migration manifest: `migrations/1.1.0.json`
+- Dependabot-Konfiguration ergänzen.
+- Dependabot-Issue-Tracker-Workflow ergänzen.
+- bestehende Dependabot-PRs können bei Bedarf manuell als Issues nachdokumentiert werden.
+
 ## 1.0.0 - 2026-10-03
 
 ### Added
