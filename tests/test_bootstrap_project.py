@@ -29,6 +29,11 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn('language: "python"', files[".rwa-baseline.yml"])
             self.assertIn("radon cc . --min C", files[".github/workflows/ci.yml"])
             self.assertIn("ruff check .", files[".github/workflows/ci.yml"])
+            for heading in ("## Purpose", "## Prerequisites", "## Installation", "## Configuration", "## Start", "## Tests", "## Build", "## Architecture"):
+                self.assertIn(heading, files["README.md"])
+            self.assertIn("docs/adr/README.md", files)
+            self.assertIn("docs/adr/0000-template.md", files)
+            self.assertIn("## Components and Responsibilities", files["docs/ARCHITECTURE.md"])
 
     def test_node_profile_generates_package_json(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
