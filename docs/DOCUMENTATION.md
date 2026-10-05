@@ -15,6 +15,10 @@ Die Dokumentation muss einem kompetenten Entwickler ohne Projektvorgeschichte er
 - Changelog für ausgelieferte Änderungen
 - projektspezifische Betriebs-/Build-/Release-Hinweise, soweit erforderlich
 
+## Handover-Review
+
+Vor Abschluss einer relevanten Änderung wird geprüft, ob ein neuer Entwickler die geänderten Build-, Konfigurations-, Betriebs- und Architekturannahmen ausschließlich aus dem Repository nachvollziehen kann. Wenn dafür Wissen aus Chat, Prompt oder persönlicher Erinnerung nötig wäre, ist die Dokumentation noch nicht vollständig.
+
 ## Code-Dokumentation
 
 Öffentliche und fachlich relevante Funktionen, Klassen und Module erhalten die für den Stack übliche strukturierte Dokumentation (z. B. JSDoc oder Docstrings).
