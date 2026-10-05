@@ -1,0 +1,33 @@
+name: Preserve staging branch
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  preserve-staging:
+    name: Restore staging when promotion auto-delete removed it
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restore staging from promoted main when missing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          MAIN_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        run: |
+          if gh api "repos/$REPO/git/ref/heads/staging" >/dev/null 2>&1; then
+            echo "staging already exists; nothing to do."
+            exit 0
+          fi
+
+          gh api "repos/$REPO/git/refs" \
+            --method POST \
+            -f ref='refs/heads/staging' \
+            -f sha="$MAIN_SHA"
+
+          echo "Restored staging at promoted main commit $MAIN_SHA."

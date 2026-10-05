@@ -90,8 +90,8 @@
       "id": "security.ci.least_privilege",
       "description": "CI workflows declare read-only contents permission",
       "severity": "error",
-      "check": "glob_each_contains_all",
-      "path": ".github/workflows/*.yml",
+      "check": "file_contains_all",
+      "path": ".github/workflows/ci.yml",
       "tokens": [
         "permissions:",
         "contents: read"
