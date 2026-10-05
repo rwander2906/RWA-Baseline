@@ -38,6 +38,8 @@ Abhängigkeiten werden automatisiert auf bekannte Schwachstellen geprüft. Autom
 
 Build- und CI-Aktionen sollen auf nachvollziehbare Versionen festgelegt werden. Berechtigungen von CI-Workflows folgen dem Least-Privilege-Prinzip.
 
+Dependabot-Befunde werden zusätzlich zum automatisch erzeugten Pull Request als verknüpfte GitHub-Issues dokumentiert. So bleiben Dependency- und Security-Arbeiten im normalen Issue-Backlog nachvollziehbar, auch wenn der technische PR später geschlossen oder ersetzt wird.
+
 ## Security-relevante Änderungen
 
 Änderungen an Authentifizierung, Autorisierung, Secrets, Persistenz, Datenschutz, Rollen/Rechten, Stage-Routing oder sicherheitsrelevanter Validierung benötigen explizite Tests.
