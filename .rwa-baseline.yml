@@ -20,3 +20,12 @@ exceptions:
   - rule: "docs.human_maintainability"
     value: null
     reason: "The baseline repository is the source of the project guidelines; generated/adopting application projects carry the explicit Human Maintainability contract in docs/PROJECT_GUIDELINES.md."
+  - rule: "docs.readme.handover"
+    value: null
+    reason: "The baseline repository is the policy/template source rather than an application project; generated/adopting projects must provide the operational README handover sections."
+  - rule: "docs.architecture.handover"
+    value: null
+    reason: "The baseline repository has no application architecture/runtime; generated/adopting projects must document their architecture handover structure."
+  - rule: "docs.adr"
+    value: null
+    reason: "The baseline repository defines ADR policy/templates for application projects; project-specific architecture decisions belong to adopting repositories."
