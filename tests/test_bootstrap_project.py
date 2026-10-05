@@ -24,6 +24,7 @@ class BootstrapProjectTests(unittest.TestCase):
 
             self.assertIn(".rwa-baseline.yml", files)
             self.assertIn(".github/workflows/ci.yml", files)
+            self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn("requirements-dev.txt", files)
             self.assertIn('language: "python"', files[".rwa-baseline.yml"])
 
@@ -34,6 +35,7 @@ class BootstrapProjectTests(unittest.TestCase):
             files = MODULE.generated_files(args)
 
             self.assertIn("package.json", files)
+            self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn('"name": "my-app"', files["package.json"])
 
     def test_existing_file_blocks_bootstrap(self) -> None:

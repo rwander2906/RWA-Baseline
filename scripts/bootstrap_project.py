@@ -222,6 +222,9 @@ Project initialized from RWA Baseline {BASELINE_VERSION}.
         ".github/workflows/dependabot-issue-tracker.yml": load_baseline_template(
             ".github/workflows/dependabot-issue-tracker.yml"
         ),
+        ".github/workflows/preserve-staging.yml": load_baseline_template(
+            ".github/workflows/preserve-staging.yml"
+        ),
     }
 
     values = {

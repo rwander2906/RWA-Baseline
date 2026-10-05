@@ -37,3 +37,19 @@ Die Baseline selbst und daraus gestartete Projekte sollen die folgenden Reposito
 Die derzeit verfügbare GitHub-Integration kann Repository-Dateien, Branches, Issues und Pull Requests bearbeiten, aber keine Repository-Settings oder Rulesets schreiben.
 
 Darum werden die Sollwerte hier versioniert und zusätzlich im Bootstrap-/Compliance-Werkzeug berücksichtigt. Die erstmalige Aktivierung von `delete_branch_on_merge` und Rulesets muss derzeit über GitHub selbst oder später über ein Bootstrap-Werkzeug mit GitHub API/CLI erfolgen.
+
+
+## Persistenter Integrationsbranch bei Auto-Delete
+
+`Delete branch on merge` bleibt aktiviert, damit kurzlebige Issue- und Feature-Branches nach dem Merge automatisch entfernt werden.
+
+Da GitHub diese Einstellung repositoryweit anwendet, kann auch der persistente Integrationsbranch `staging` nach einer Promotion `staging -> main` gelöscht werden. Baseline-Projekte enthalten deshalb den Workflow `.github/workflows/preserve-staging.yml`.
+
+Der Workflow:
+
+- reagiert ausschließlich auf erfolgreich gemergte Pull Requests von `staging` nach `main`
+- prüft zuerst, ob `staging` noch existiert
+- legt `staging` nur bei Bedarf am gerade nach `main` promoteten Commit neu an
+- verändert das Auto-Delete-Verhalten für Issue- und Feature-Branches nicht
+
+Der Bootstrap übernimmt diesen Workflow automatisch in neue Projekte. Dafür benötigt der Workflow `contents: write`; alle übrigen Baseline-Workflows behalten ihre minimal erforderlichen Berechtigungen.
