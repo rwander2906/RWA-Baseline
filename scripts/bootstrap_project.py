@@ -37,8 +37,7 @@ Describe system context, major components, data flows, persistence, external dep
 
 This project follows RWA Baseline {version}.
 
-Document only project-specific additions or justified deviations here. General engineering rules belong to RWA-Baseline.
-""",
+Document only project-specific additions or justified deviations here. General engineering rules belong to RWA-Baseline.\n\n## Human Maintainability\n\nThis project must remain understandable, buildable, testable, operable and maintainable by a competent developer without prior project history and without an AI service. Critical project knowledge must live in the repository and reproducible processes, not only in chats or prompts.\n""",
 }
 
 PROFILE_FILES = {
