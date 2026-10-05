@@ -1,0 +1,73 @@
+name: Dependabot Issue Tracker
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  document-dependabot-pr:
+    name: Document Dependabot PR as issue
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create or reopen tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_HEAD: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          marker="<!-- rwa-dependabot-pr:${PR_NUMBER} -->"
+
+          existing_issue="$(
+            gh api --paginate "repos/${REPO}/issues?state=all&per_page=100"               | jq -r --arg marker "$marker"                 '.[] | select(has("pull_request") | not) | select((.body // "") | contains($marker)) | .number'               | head -n 1
+          )"
+
+          if [[ -n "$existing_issue" ]]; then
+            state="$(gh api "repos/${REPO}/issues/${existing_issue}" --jq '.state')"
+            issue_url="$(gh api "repos/${REPO}/issues/${existing_issue}" --jq '.html_url')"
+
+            if [[ "$state" == "closed" ]]; then
+              gh issue reopen "$existing_issue" --repo "$REPO"
+              gh pr comment "$PR_NUMBER" --repo "$REPO"                 --body "Dependabot tracking issue reopened: ${issue_url}"
+            fi
+
+            echo "Tracking issue already exists: ${issue_url}"
+            exit 0
+          fi
+
+          body_file="$(mktemp)"
+          {
+            printf '%s\n\n' "$marker"
+            printf '## Dependabot-Befund\n\n'
+            printf 'Dependabot hat Pull Request **#%s** eröffnet.\n\n' "$PR_NUMBER"
+            printf -- '- PR: %s\n' "$PR_URL"
+            printf -- '- Titel: %s\n' "$PR_TITLE"
+            printf -- '- Branch: `%s`\n\n' "$PR_HEAD"
+            printf '## Bearbeitung\n\n'
+            printf 'Die technische Änderung und CI-Prüfung erfolgen im verknüpften Pull Request. '
+            printf 'Dieses Issue dokumentiert den Befund im normalen Projekt-Backlog.\n\n'
+            printf -- '- [ ] Dependabot-PR geprüft\n'
+            printf -- '- [ ] CI / Security-Auswirkungen geprüft\n'
+            printf -- '- [ ] Änderung übernommen oder begründet verworfen\n'
+            printf -- '- [ ] Issue nach Abschluss der Änderung schließen\n'
+          } > "$body_file"
+
+          issue_url="$(
+            gh issue create               --repo "$REPO"               --title "[Dependabot #${PR_NUMBER}] ${PR_TITLE}"               --body-file "$body_file"
+          )"
+
+          gh pr comment "$PR_NUMBER" --repo "$REPO"             --body "Tracking issue created: ${issue_url}"
+
+          echo "Created tracking issue: ${issue_url}"

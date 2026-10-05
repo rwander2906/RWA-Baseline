@@ -26,10 +26,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--rules",
         type=Path,
-        default=Path(__file__).resolve().parents[1] / "rules" / "baseline-1.0.json",
+        default=None,
+        help="Optional explicit rules catalog. Defaults to the catalog matching .rwa-baseline.yml.",
     )
     parser.add_argument("--json", action="store_true", dest="json_output")
     return parser.parse_args()
+
+
+def read_declared_baseline_version(config_path: Path) -> str:
+    """Return the baseline version declared by a project."""
+    text = read_text(config_path)
+    match = re.search(r'^\s*version:\s*["\']?([0-9A-Za-z.-]+)', text, re.MULTILINE)
+    if not match:
+        raise RuntimeError(f"No baseline.version found in {config_path}")
+    return match.group(1)
+
+
+def default_rules_path(root: Path) -> Path:
+    """Resolve the rule catalog matching the project's adopted baseline."""
+    version = read_declared_baseline_version(root / ".rwa-baseline.yml")
+    stable = version.split("-", 1)[0]
+    parts = stable.split(".")
+    if len(parts) != 3:
+        raise RuntimeError(f"Unsupported baseline version: {version}")
+    catalog = Path(__file__).resolve().parents[1] / "rules" / f"baseline-{parts[0]}.{parts[1]}.json"
+    if not catalog.is_file():
+        raise RuntimeError(f"No rule catalog found for baseline {version}: {catalog}")
+    return catalog
 
 
 def read_text(path: Path) -> str:
@@ -154,7 +177,12 @@ def run_check(root: Path, rules_path: Path) -> list[Finding]:
 def main() -> int:
     args = parse_args()
     root = args.target.resolve()
-    findings = run_check(root, args.rules)
+    try:
+        rules_path = args.rules or default_rules_path(root)
+        findings = run_check(root, rules_path)
+    except RuntimeError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
 
     failed_errors = [f for f in findings if f.status == "fail" and f.severity == "error"]
 
