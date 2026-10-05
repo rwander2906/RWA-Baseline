@@ -89,6 +89,7 @@ jobs:
           cache: pip
       - run: python -m pip install -r requirements-dev.txt
       - run: ruff check .
+      - run: radon cc . --min C --show-complexity --total-average
       - run: python -m compileall -q .
       - run: coverage run -m unittest discover -s tests -v
       - run: coverage report --fail-under=80
@@ -113,6 +114,7 @@ updates:
   "type": "module",
   "scripts": {
     "test": "node --test",
+    "test:coverage": "node --experimental-test-coverage --test --test-coverage-lines=80",
     "lint": "eslint . --max-warnings=0"
   },
   "devDependencies": {
@@ -125,7 +127,9 @@ updates:
     files: ["**/*.js"],
     rules: {
       "no-unused-vars": "error",
-      "no-undef": "error"
+      "no-undef": "error",
+      "complexity": ["error", 12],
+      "no-empty": "error"
     }
   }
 ];
@@ -161,7 +165,7 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm audit --audit-level=high
       - run: npm run lint
-      - run: npm test
+      - run: npm run test:coverage
 """,
     },
 }
