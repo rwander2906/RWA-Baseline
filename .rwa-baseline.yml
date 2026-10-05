@@ -1,0 +1,19 @@
+baseline:
+  version: "1.0.0"
+  adopted: "2026-10-03"
+
+profile:
+  language: "baseline"
+
+quality:
+  coverage_minimum: null
+  complexity_maximum: null
+  warnings_allowed: 0
+
+exceptions:
+  - rule: "quality.coverage.minimum"
+    value: null
+    reason: "Repository contains policy, templates and validation tooling; no application runtime yet."
+  - rule: "quality.complexity.maximum"
+    value: null
+    reason: "No application runtime; complexity threshold becomes relevant for bootstrap/compliance tooling."

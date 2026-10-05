@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "title": "Initial stable RWA Baseline",
+  "changes": [
+    {
+      "id": "workflow.issue-lifecycle",
+      "summary": "Keep issues open until promotion to main and required release/deployment.",
+      "checklist": "Align issue/PR closing semantics with staging-to-main promotion."
+    },
+    {
+      "id": "quality.ratchets",
+      "summary": "Use coverage, complexity and warning ratchets for legacy projects.",
+      "checklist": "Document current values and ensure CI blocks regressions."
+    },
+    {
+      "id": "security.dependency-check",
+      "summary": "Dependency/security scanning is part of the CI minimum.",
+      "checklist": "Add dependency/security scanning with a documented blocking threshold."
+    },
+    {
+      "id": "security.ci.least-privilege",
+      "summary": "CI workflows follow least privilege.",
+      "checklist": "Review workflow permissions and prefer contents: read by default."
+    },
+    {
+      "id": "runtime.stage-separation",
+      "summary": "Staging and production runtime/persistent state are separate by default.",
+      "checklist": "Review shared runtime state and document any intentional exceptions."
+    },
+    {
+      "id": "release.artifacts",
+      "summary": "Release artifacts are reproducible and free of customer data/secrets.",
+      "checklist": "Review build/release packaging and neutral example files."
+    },
+    {
+      "id": "meta.baseline-adoption",
+      "summary": "Projects declare adopted baseline version and explicit exceptions.",
+      "checklist": "Create or update .rwa-baseline.yml and review all exceptions."
+    }
+  ]
+}
