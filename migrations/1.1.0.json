@@ -1,0 +1,16 @@
+{
+  "version": "1.1.0",
+  "title": "Dependabot findings become backlog issues",
+  "changes": [
+    {
+      "id": "workflow.dependabot.issue-tracker",
+      "summary": "Every Dependabot pull request receives a linked backlog issue.",
+      "checklist": "Add the Dependabot issue-tracker workflow and verify that opened/reopened Dependabot PRs create or reuse exactly one issue."
+    },
+    {
+      "id": "security.dependabot.config",
+      "summary": "Actively maintained projects configure automated dependency updates.",
+      "checklist": "Add or review .github/dependabot.yml for the project's package ecosystem and GitHub Actions."
+    }
+  ]
+}
