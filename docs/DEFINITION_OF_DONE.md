@@ -15,6 +15,8 @@ Eine Änderung ist abgeschlossen, wenn die jeweils relevanten Punkte erfüllt si
 - Fehlerbehandlung wurde geprüft
 - Logging, Datenschutz und Secret-Schutz wurden geprüft
 - Dokumentation wurde angepasst
+- notwendiges Build-, Betriebs-, Konfigurations- und Migrationswissen ist im Repository nachvollziehbar; kein kritischer Schritt existiert ausschließlich als Chat-, Prompt- oder persönliches Wissen
+- die Änderung bleibt ohne KI-Dienst baubar, testbar, betreibbar und durch einen kompetenten Entwickler weiterentwickelbar
 - CI ist vollständig grün
 - erforderliche manuelle Smoke-/Staging-Tests wurden durchgeführt und dokumentiert
 - keine unbegründete Baseline-Abweichung wurde eingeführt
