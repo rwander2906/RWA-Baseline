@@ -27,6 +27,8 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn("requirements-dev.txt", files)
             self.assertIn('language: "python"', files[".rwa-baseline.yml"])
+            self.assertIn("radon cc . --min C", files[".github/workflows/ci.yml"])
+            self.assertIn("ruff check .", files[".github/workflows/ci.yml"])
 
     def test_node_profile_generates_package_json(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -37,6 +39,10 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn("package.json", files)
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn('"name": "my-app"', files["package.json"])
+            self.assertIn('"complexity": ["error", 12]', files["eslint.config.js"])
+            self.assertIn('"no-empty": "error"', files["eslint.config.js"])
+            self.assertIn("test:coverage", files["package.json"])
+            self.assertIn("npm run test:coverage", files[".github/workflows/ci.yml"])
 
     def test_existing_file_blocks_bootstrap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
