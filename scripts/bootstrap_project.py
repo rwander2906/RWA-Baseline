@@ -184,7 +184,33 @@ class SmokeTest(unittest.TestCase):\
     def test_bootstrap(self):\
         self.assertTrue(True)\
 """,
-        ".github/workflows/ci.yml": PROFILE_FILES["python"][".github/workflows/ci.yml"],
+        ".github/workflows/ci.yml": """name: CI
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: radon cc . --min C --show-complexity --total-average
+      - run: python -m compileall -q .
+      - run: coverage run -m unittest discover -s tests -v
+      - run: coverage report --fail-under=80
+""",
     },
     "node": {
         ".nvmrc": "22\n",
