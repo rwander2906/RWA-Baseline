@@ -196,10 +196,8 @@ class SmokeTest(unittest.TestCase):\
         ".github/workflows/ci.yml": PROFILE_FILES["python"][".github/workflows/ci.yml"],
     },
     "node": {
-        ".nvmrc": "22
-",
-        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.
-",
+        ".nvmrc": "22\\n",
+        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\\n",
         ".github/dependabot.yml": """version: 2
 updates:
   - package-ecosystem: "npm"
