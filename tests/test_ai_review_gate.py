@@ -6,7 +6,7 @@ def load(name,path):
 B=load("builder","scripts/build_ai_review_package.py"); R=load("renderer","scripts/render_ai_review.py")
 class GateTests(unittest.TestCase):
     def test_issue_reference(self): self.assertEqual(B.issue_number_from_text("Refs #39"),39)
-    def test_acceptance(self): self.assertEqual(B.acceptance_criteria("## Akzeptanz\\n- A\\n- B"),["A","B"])
+    def test_acceptance(self): self.assertEqual(B.acceptance_criteria(chr(10).join(["## Akzeptanz","- A","- B"])),["A","B"])
     def test_dialog_filters_foreign_bots_and_limits_history(self):
         comments=[{"body":"noise","user":{"login":"other[bot]"},"created_at":"1"},{"body":"human","user":{"login":"dev"},"created_at":"2"},{"body":"<!-- rwa-ai-review --> review","user":{"login":"github-actions[bot]"},"created_at":"3"}]
         dialog=B.review_dialog(comments,limit=2)
