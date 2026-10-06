@@ -33,9 +33,9 @@ jobs:
         run: |
           ISSUE=$(python -c "import os,re; m=re.search(r'(?:Refs|Closes|Fixes)\\s+#(\\d+)',os.environ.get('PR_BODY',''),re.I); print(m.group(1) if m else '')")
           test -n "$ISSUE" || { echo "PR must reference an Issue using Refs #N"; exit 1; }
-          gh api "repos/${{ github.repository }}/issues/$ISSUE" > issue.json
+          gh api "repos/${{ github.repository }}/issues/$ISSUE" > issue.json\n          gh api "repos/${{ github.repository }}/issues/$ISSUE/comments?per_page=100" > issue-comments.json
           git diff "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}" > pr.diff
-          python scripts/build_ai_review_package.py --event "$GITHUB_EVENT_PATH" --issue issue.json --diff pr.diff --rules rules/baseline-1.1.json --context docs/PROJECT_GUIDELINES.md --context docs/ARCHITECTURE.md --output ai-review-package.json
+          python scripts/build_ai_review_package.py --event "$GITHUB_EVENT_PATH" --issue issue.json --diff pr.diff --rules rules/baseline-1.1.json --context docs/PROJECT_GUIDELINES.md --context docs/ARCHITECTURE.md --dialog issue-comments.json --output ai-review-package.json
       - name: Run provider-neutral review harness
         run: python scripts/ai_review_harness.py ai-review-package.json --provider "$AI_REVIEW_PROVIDER" --model "$AI_REVIEW_MODEL" --output ai-review-result.json
       - name: Publish review result and apply policy
