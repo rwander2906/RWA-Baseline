@@ -9,7 +9,9 @@ Refs #
 ## Prüfung
 
 - [ ] Akzeptanzkriterien erfüllt
-- [ ] Tests ergänzt/angepasst
+- [ ] fachlich geändertes Verhalten inkl. relevanter Normal-, Fehler-/Negativ- und Grenzfälle getestet
+- [ ] neue/geänderte Kernlogik angemessen abgesichert
+- [ ] Tests deterministisch und unabhängig von produktiven Diensten/Credentials
 - [ ] Regressionstest bei Bugfix oder nicht erforderlich
 - [ ] Lint/statische Analyse grün
 - [ ] Compile/Syntax grün oder nicht anwendbar
