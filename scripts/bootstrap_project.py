@@ -404,6 +404,11 @@ See `docs/ARCHITECTURE.md` for system context, components, data flows, external 
     for path, template in PROFILE_FILES[args.profile].items():
         files[path] = render(template)
 
+    if args.profile == "python-desktop":
+        files["desktop.spec"] = load_baseline_template("templates/python-desktop/desktop.spec")
+        files[".github/workflows/windows-desktop-release.yml"] = load_baseline_template(".github/workflows/windows-desktop-release.yml")
+        files["docs/WINDOWS_DESKTOP_RELEASE.md"] = load_baseline_template("docs/WINDOWS_DESKTOP_RELEASE.md")
+
     return files
 
 
