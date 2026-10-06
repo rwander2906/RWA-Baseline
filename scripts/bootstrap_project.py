@@ -83,7 +83,16 @@ What becomes easier, harder or constrained by this decision?
 
 This project follows RWA Baseline {version}.
 
-Document only project-specific additions or justified deviations here. General engineering rules belong to RWA-Baseline.\n\n## Human Maintainability\n\nThis project must remain understandable, buildable, testable, operable and maintainable by a competent developer without prior project history and without an AI service. Critical project knowledge must live in the repository and reproducible processes, not only in chats or prompts.\n\n## Reproducible Project Entry\n\nRuntime/tool versions and dependencies must be pinned or locked. Configuration examples must contain no secrets. Local build/test instructions and CI should use the same reproducible path where practical. Schema or data changes that are required for a working version must be delivered as versioned migrations; undocumented manual production changes are not acceptable. Project-specific deviations from this contract must be documented with rationale.\n""",
+Document only project-specific additions or justified deviations here. General engineering rules belong to RWA-Baseline.
+
+## Human Maintainability
+
+This project must remain understandable, buildable, testable, operable and maintainable by a competent developer without prior project history and without an AI service. Critical project knowledge must live in the repository and reproducible processes, not only in chats or prompts.
+
+## Reproducible Project Entry
+
+Runtime/tool versions and dependencies must be pinned or locked. Configuration examples must contain no secrets. Local build/test instructions and CI should use the same reproducible path where practical. Schema or data changes that are required for a working version must be delivered as versioned migrations; undocumented manual production changes are not acceptable. Project-specific deviations from this contract must be documented with rationale.
+""",
 }
 
 PROFILE_FILES = {
@@ -99,9 +108,10 @@ updates:
     schedule:
       interval: "weekly"
 """,
-        ".python-version": "3.12\n",
-        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\n",
-        "requirements-dev.txt": "coverage==7.10.7\nruff==0.14.0\nradon==6.0.1\n",
+        ".python-version": "3.12\\n",
+        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.
+",
+        "requirements-dev.txt": "coverage==7.10.7\\nruff==0.14.0\\nradon==6.0.1\\n",
         "tests/test_smoke.py": '''"""Initial bootstrap smoke test."""
 
 import unittest
@@ -143,9 +153,54 @@ jobs:
       - run: coverage report --fail-under=80
 """,
     },
-    "python-desktop": {\n        ".github/dependabot.yml": """version: 2\nupdates:\n  - package-ecosystem: "pip"\n    directory: "/"\n    schedule:\n      interval: "weekly"\n  - package-ecosystem: "github-actions"\n    directory: "/"\n    schedule:\n      interval: "weekly"\n""",\n        ".python-version": "3.12\\n",\n        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\\n",\n        "requirements-dev.txt": "coverage==7.10.7\\nruff==0.14.0\\nradon==6.0.1\\n",\n        "requirements-build.txt": "pyinstaller==6.16.0\\n",\n        "VERSION": "0.1.0\\n",\n        "desktop.spec": load_baseline_template("templates/python-desktop/desktop.spec"),\n        ".github/workflows/windows-desktop-release.yml": load_baseline_template(".github/workflows/windows-desktop-release.yml"),\n        "docs/WINDOWS_DESKTOP_RELEASE.md": load_baseline_template("docs/WINDOWS_DESKTOP_RELEASE.md"),\n        "src/main.py": """import argparse\\n\\nparser = argparse.ArgumentParser()\\nparser.add_argument("--version", action="store_true")\\nargs = parser.parse_args()\\nif args.version:\\n    print("0.1.0")\\n""",\n        "tests/test_smoke.py": """import unittest\\n\\nclass SmokeTest(unittest.TestCase):\\n    def test_bootstrap(self):\\n        self.assertTrue(True)\\n""",\n        ".github/workflows/ci.yml": PROFILE_FILES["python"][".github/workflows/ci.yml"],\n    },\n    "node": {
-        ".nvmrc": "22\n",
-        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\n",
+    "python-desktop": {
+        ".github/dependabot.yml": """version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+""",
+        ".python-version": "3.12\
+",
+        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\
+",
+        "requirements-dev.txt": "coverage==7.10.7\
+ruff==0.14.0\
+radon==6.0.1\
+",
+        "requirements-build.txt": "pyinstaller==6.16.0\
+",
+        "VERSION": "0.1.0\
+",
+        "desktop.spec": load_baseline_template("templates/python-desktop/desktop.spec"),
+        ".github/workflows/windows-desktop-release.yml": load_baseline_template(".github/workflows/windows-desktop-release.yml"),
+        "docs/WINDOWS_DESKTOP_RELEASE.md": load_baseline_template("docs/WINDOWS_DESKTOP_RELEASE.md"),
+        "src/main.py": """import argparse\
+\
+parser = argparse.ArgumentParser()\
+parser.add_argument("--version", action="store_true")\
+args = parser.parse_args()\
+if args.version:\
+    print("0.1.0")\
+""",
+        "tests/test_smoke.py": """import unittest\
+\
+class SmokeTest(unittest.TestCase):\
+    def test_bootstrap(self):\
+        self.assertTrue(True)\
+""",
+        ".github/workflows/ci.yml": PROFILE_FILES["python"][".github/workflows/ci.yml"],
+    },
+    "node": {
+        ".nvmrc": "22
+",
+        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.
+",
         ".github/dependabot.yml": """version: 2
 updates:
   - package-ecosystem: "npm"
@@ -341,9 +396,11 @@ See `docs/ARCHITECTURE.md` for system context, components, data flows, external 
 def ensure_safe_target(target: Path, files: dict[str, str]) -> None:
     conflicts = [str(target / relative) for relative in files if (target / relative).exists()]
     if conflicts:
-        joined = "\n  - ".join(conflicts)
+        joined = "
+  - ".join(conflicts)
         raise RuntimeError(
-            "Bootstrap would overwrite existing files. Aborting. Conflicts:\n  - " + joined
+            "Bootstrap would overwrite existing files. Aborting. Conflicts:
+  - " + joined
         )
 
 
