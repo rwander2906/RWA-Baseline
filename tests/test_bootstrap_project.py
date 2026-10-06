@@ -37,6 +37,11 @@ class BootstrapProjectTests(unittest.TestCase):
             for heading in ("## Purpose", "## Prerequisites", "## Installation", "## Configuration", "## Start", "## Tests", "## Build", "## Architecture"):
                 self.assertIn(heading, files["README.md"])
             self.assertIn("docs/TESTING_AND_QUALITY.md", files)
+            self.assertIn("docs/USER_DOCUMENTATION.md", files)
+            self.assertIn("docs/user/README.md", files)
+            self.assertIn("docs/user/screenshots/.gitkeep", files)
+            self.assertIn(".github/workflows/release-documentation-gate.yml", files)
+            self.assertIn("scripts/check_user_documentation.py", files)
             self.assertIn("Verhalten vor Kennzahl", files["docs/TESTING_AND_QUALITY.md"])
             self.assertIn("Legacy-Adoption und Ratchet", files["docs/TESTING_AND_QUALITY.md"])
             self.assertIn("docs/adr/README.md", files)

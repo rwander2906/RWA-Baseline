@@ -19,6 +19,8 @@ Eine Änderung ist abgeschlossen, wenn die jeweils relevanten Punkte erfüllt si
 - Developer-Dokumentation (README, Architektur und relevante ADRs) wurde bei Änderungen an Voraussetzungen, Konfiguration, Build/Start, Komponenten, Integrationen oder langfristigen Architekturentscheidungen aktualisiert
 - notwendiges Build-, Betriebs-, Konfigurations- und Migrationswissen ist im Repository nachvollziehbar; kein kritischer Schritt existiert ausschließlich als Chat-, Prompt- oder persönliches Wissen
 - die Änderung bleibt ohne KI-Dienst baubar, testbar, betreibbar und durch einen kompetenten Entwickler weiterentwickelbar
+- Anwenderdokumentation wurde bei sichtbaren Funktionsänderungen aktualisiert; erforderliche Screenshots sind aktuell und vollständig referenziert
+- Release-/Nutzerpakete enthalten die erforderliche Anwenderdokumentation ohne kundenspezifische Daten oder Secrets
 - CI ist vollständig grün
 - erforderliche manuelle Smoke-/Staging-Tests wurden durchgeführt und dokumentiert
 - keine unbegründete Baseline-Abweichung wurde eingeführt

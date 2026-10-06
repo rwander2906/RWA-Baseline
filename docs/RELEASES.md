@@ -34,3 +34,7 @@ Nutzerpakete enthalten die für Betrieb und Nutzung erforderlichen Dokumente und
 - keine lokalen Entwicklerkonfigurationen
 
 Binärartefakte werden nur über einen dokumentierten Build-/Release-Prozess erzeugt und nicht manuell als undokumentierte Einzeldateien verteilt.
+
+## Anwenderdokumentations-Gate
+
+Für auslieferbare Anwendungen ist `docs/user/README.md` Release-Bestandteil. Der Mindeststandard und der Screenshot-Lifecycle sind in `docs/USER_DOCUMENTATION.md` definiert. Fehlende Anwenderdokumentation oder gebrochene lokale Referenzen blockieren einen Release.
