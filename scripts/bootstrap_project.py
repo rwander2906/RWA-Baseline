@@ -305,6 +305,8 @@ See `docs/ARCHITECTURE.md` for system context, components, data flows, external 
         "docs/user/screenshots/.gitkeep": "",
         ".github/ISSUE_TEMPLATE/bug.yml": load_baseline_template(".github/ISSUE_TEMPLATE/bug.yml"),
         ".github/ISSUE_TEMPLATE/feature.yml": load_baseline_template(".github/ISSUE_TEMPLATE/feature.yml"),
+        ".github/workflows/release-documentation-gate.yml": load_baseline_template(".github/workflows/release-documentation-gate.yml"),
+        "scripts/check_user_documentation.py": load_baseline_template("scripts/check_user_documentation.py"),
         ".github/workflows/promotion-gate.yml": load_baseline_template(
             ".github/workflows/promotion-gate.yml"
         ),
