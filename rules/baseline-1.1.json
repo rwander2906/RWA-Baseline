@@ -69,6 +69,34 @@
       "path": "docs/ARCHITECTURE.md"
     },
     {
+      "id": "docs.user.guide",
+      "description": "User documentation entry point is present",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/user/README.md",
+      "tokens": [
+        "## Installation und Start",
+        "## Bedienung",
+        "## Konfiguration",
+        "## Fehler und Support",
+        "## Version und Gültigkeit"
+      ]
+    },
+    {
+      "id": "docs.user.policy",
+      "description": "User documentation and screenshot lifecycle policy is present",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/USER_DOCUMENTATION.md",
+      "tokens": [
+        "docs/user/screenshots/",
+        "GitHub Issue oder Subissue",
+        "exakten Dateinamen",
+        "Verwendungsstelle",
+        "Release-Gate"
+      ]
+    },
+    {
       "id": "github.pr_template",
       "description": "Pull request template is present",
       "severity": "error",
