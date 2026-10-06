@@ -17,6 +17,8 @@ jobs:
     env:
       AI_REVIEW_PROVIDER: ${{ vars.AI_REVIEW_PROVIDER || 'fake' }}
       AI_REVIEW_MODEL: ${{ vars.AI_REVIEW_MODEL || 'baseline-test' }}
+      AI_REVIEW_MODE: ${{ vars.AI_REVIEW_MODE || 'advisory' }}
+      AI_REVIEW_OUTAGE: ${{ vars.AI_REVIEW_OUTAGE || 'fail-open' }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -36,11 +38,12 @@ jobs:
           python scripts/build_ai_review_package.py --event "$GITHUB_EVENT_PATH" --issue issue.json --diff pr.diff --rules rules/baseline-1.1.json --context docs/PROJECT_GUIDELINES.md --context docs/ARCHITECTURE.md --output ai-review-package.json
       - name: Run provider-neutral review harness
         run: python scripts/ai_review_harness.py ai-review-package.json --provider "$AI_REVIEW_PROVIDER" --model "$AI_REVIEW_MODEL" --output ai-review-result.json
-      - name: Publish review result and enforce BLOCK
+      - name: Publish review result and apply policy
         if: always()
         run: |
           test -f ai-review-result.json || { echo "AI review produced no result" >> "$GITHUB_STEP_SUMMARY"; exit 1; }
           python scripts/render_ai_review.py ai-review-result.json --summary "$GITHUB_STEP_SUMMARY"
+          python scripts/ai_review_policy.py ai-review-result.json --mode "$AI_REVIEW_MODE" --outage "$AI_REVIEW_OUTAGE" --output ai-review-decision.json
       - uses: actions/upload-artifact@v6
         if: always()
         with:
@@ -48,5 +51,6 @@ jobs:
           path: |
             ai-review-package.json
             ai-review-result.json
+            ai-review-decision.json
           if-no-files-found: ignore
           retention-days: 14
