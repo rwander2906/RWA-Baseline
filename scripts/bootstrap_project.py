@@ -167,9 +167,9 @@ radon==6.0.1\
 ",
         "VERSION": "0.1.0\
 ",
-        "desktop.spec": load_baseline_template("templates/python-desktop/desktop.spec"),
-        ".github/workflows/windows-desktop-release.yml": load_baseline_template(".github/workflows/windows-desktop-release.yml"),
-        "docs/WINDOWS_DESKTOP_RELEASE.md": load_baseline_template("docs/WINDOWS_DESKTOP_RELEASE.md"),
+        "desktop.spec": "__RWA_DESKTOP_SPEC__",
+        ".github/workflows/windows-desktop-release.yml": "__RWA_WINDOWS_RELEASE_WORKFLOW__",
+        "docs/WINDOWS_DESKTOP_RELEASE.md": "__RWA_WINDOWS_DESKTOP_DOC__",
         "src/main.py": """import argparse\
 \
 parser = argparse.ArgumentParser()\
