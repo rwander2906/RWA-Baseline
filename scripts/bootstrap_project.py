@@ -300,6 +300,9 @@ See `docs/ARCHITECTURE.md` for system context, components, data flows, external 
 """,
         ".github/pull_request_template.md": load_baseline_template(".github/pull_request_template.md"),
         "docs/TESTING_AND_QUALITY.md": load_baseline_template("docs/TESTING_AND_QUALITY.md"),
+        "docs/USER_DOCUMENTATION.md": load_baseline_template("docs/USER_DOCUMENTATION.md"),
+        "docs/user/README.md": load_baseline_template("docs/user/README.md"),
+        "docs/user/screenshots/.gitkeep": "",
         ".github/ISSUE_TEMPLATE/bug.yml": load_baseline_template(".github/ISSUE_TEMPLATE/bug.yml"),
         ".github/ISSUE_TEMPLATE/feature.yml": load_baseline_template(".github/ISSUE_TEMPLATE/feature.yml"),
         ".github/workflows/promotion-gate.yml": load_baseline_template(
