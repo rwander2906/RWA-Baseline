@@ -40,7 +40,7 @@ jobs:
           $package = "release\app-$env:RELEASE_VERSION-windows"
           New-Item -ItemType Directory -Force -Path $package | Out-Null
           Copy-Item ".\dist\app.exe" "$package\app.exe"
-          Copy-Item ".\docs\user" "$package\docs" -Recurse
+          Copy-Item "docs/user" "$package\\docs" -Recurse
           Compress-Archive -Path "$package\*" -DestinationPath "$package.zip"
       - uses: actions/upload-artifact@v6
         with:
