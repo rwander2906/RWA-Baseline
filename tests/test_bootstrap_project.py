@@ -36,7 +36,7 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn("ruff check .", files[".github/workflows/ci.yml"])
             for heading in ("## Purpose", "## Prerequisites", "## Installation", "## Configuration", "## Start", "## Tests", "## Build", "## Architecture"):
                 self.assertIn(heading, files["README.md"])
-            self.assertIn("docs/TESTING_AND_QUALITY.md", files)
+            self.assertIn("docs/TESTING_AND_QUALITY.md", files)\n            self.assertIn("docs/USER_DOCUMENTATION.md", files)\n            self.assertIn("docs/user/README.md", files)\n            self.assertIn("docs/user/screenshots/.gitkeep", files)\n            self.assertIn(".github/workflows/release-documentation-gate.yml", files)\n            self.assertIn("scripts/check_user_documentation.py", files)
             self.assertIn("Verhalten vor Kennzahl", files["docs/TESTING_AND_QUALITY.md"])
             self.assertIn("Legacy-Adoption und Ratchet", files["docs/TESTING_AND_QUALITY.md"])
             self.assertIn("docs/adr/README.md", files)
