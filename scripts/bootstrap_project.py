@@ -83,7 +83,7 @@ What becomes easier, harder or constrained by this decision?
 
 This project follows RWA Baseline {version}.
 
-Document only project-specific additions or justified deviations here. General engineering rules belong to RWA-Baseline.\n\n## Human Maintainability\n\nThis project must remain understandable, buildable, testable, operable and maintainable by a competent developer without prior project history and without an AI service. Critical project knowledge must live in the repository and reproducible processes, not only in chats or prompts.\n""",
+Document only project-specific additions or justified deviations here. General engineering rules belong to RWA-Baseline.\n\n## Human Maintainability\n\nThis project must remain understandable, buildable, testable, operable and maintainable by a competent developer without prior project history and without an AI service. Critical project knowledge must live in the repository and reproducible processes, not only in chats or prompts.\n\n## Reproducible Project Entry\n\nRuntime/tool versions and dependencies must be pinned or locked. Configuration examples must contain no secrets. Local build/test instructions and CI should use the same reproducible path where practical. Schema or data changes that are required for a working version must be delivered as versioned migrations; undocumented manual production changes are not acceptable. Project-specific deviations from this contract must be documented with rationale.\n""",
 }
 
 PROFILE_FILES = {
@@ -144,6 +144,8 @@ jobs:
 """,
     },
     "node": {
+        ".nvmrc": "22\\n",
+        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\\n",
         ".github/dependabot.yml": """version: 2
 updates:
   - package-ecosystem: "npm"
@@ -262,15 +264,15 @@ Describe what this project does, who it serves and the problem it solves.
 
 ## Prerequisites
 
-Document required runtimes, tools, services and access prerequisites.
+The required runtime version is pinned in `.python-version` (Python) or `.nvmrc` (Node.js). Document any additional tools, services and access prerequisites here.
 
 ## Installation
 
-Document the reproducible setup from a fresh clone to an installed development environment.
+Install dependencies from the committed dependency contract. Python uses the fully pinned `requirements-dev.txt`; Node.js uses `package-lock.json` with `npm ci`.
 
 ## Configuration
 
-Document required configuration, environment variables, secrets handling and example configuration.
+Use `.env.example` to document required environment variables without secrets. Secrets stay external to the repository. Document any additional configuration here.
 
 ## Start
 
@@ -278,11 +280,11 @@ Document how to start the application or service locally.
 
 ## Tests
 
-Document how to run the test suite and any relevant test prerequisites.
+Use the same test path locally and in CI. Python: `coverage run -m unittest discover -s tests -v` followed by `coverage report --fail-under=80`. Node.js: `npm run test:coverage`.
 
 ## Build
 
-Document how to create the distributable or deployment artifact.
+The build must be automated and reproducible from repository state plus documented external configuration. Document the project-specific build command here; CI should use the same path where practical.
 
 ## Architecture
 
