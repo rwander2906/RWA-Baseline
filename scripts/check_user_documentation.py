@@ -3,7 +3,7 @@ from __future__ import annotations
 import re, sys
 from pathlib import Path
 
-LINK_RE = re.compile(r"!?(?:\\[[^]]*\\])\\(([^)]+)\\)")
+LINK_RE = re.compile(r"!?\\[[^]]*\\]\\(([^)]+)\\)")
 REQUIRED = ["## Installation und Start","## Bedienung","## Konfiguration","## Fehler und Support","## Version und Gültigkeit"]
 
 def validate(root: Path) -> list[str]:
