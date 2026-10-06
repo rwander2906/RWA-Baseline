@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: read
-  issues: read
+  issues: write
   pull-requests: read
 
 jobs:
@@ -44,6 +44,17 @@ jobs:
           test -f ai-review-result.json || { echo "AI review produced no result" >> "$GITHUB_STEP_SUMMARY"; exit 1; }
           python scripts/render_ai_review.py ai-review-result.json --summary "$GITHUB_STEP_SUMMARY"
           python scripts/ai_review_policy.py ai-review-result.json --mode "$AI_REVIEW_MODE" --outage "$AI_REVIEW_OUTAGE" --output ai-review-decision.json
+      - name: Document review in working issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          test -f ai-review-result.json -a -f ai-review-decision.json || exit 0
+          ISSUE=$(python -c "import os,re; m=re.search(r'(?:Refs|Closes|Fixes)\\s+#(\\d+)',os.environ.get('PR_BODY',''),re.I); print(m.group(1) if m else '')")
+          test -n "$ISSUE" || exit 0
+          python scripts/publish_ai_review_issue_comment.py --result ai-review-result.json --decision ai-review-decision.json --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --sha "${{ github.event.pull_request.head.sha }}" --output ai-review-comment.md
+          gh issue comment "$ISSUE" --body-file ai-review-comment.md
       - uses: actions/upload-artifact@v6
         if: always()
         with:
