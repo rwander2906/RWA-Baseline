@@ -101,6 +101,44 @@
       ]
     },
     {
+      "id": "quality.testing.behavior",
+      "description": "Testing guideline defines behavior-focused test semantics",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/TESTING_AND_QUALITY.md",
+      "tokens": [
+        "Verhalten vor Kennzahl",
+        "Normalfall",
+        "Fehler- und Negativfälle",
+        "relevante Grenzwerte",
+        "Regressionstest"
+      ]
+    },
+    {
+      "id": "quality.testing.isolation",
+      "description": "Testing guideline requires deterministic isolation from production services and credentials",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/TESTING_AND_QUALITY.md",
+      "tokens": [
+        "Tests sind deterministisch",
+        "produktiven externen Diensten",
+        "produktiven Credentials"
+      ]
+    },
+    {
+      "id": "quality.testing.adoption",
+      "description": "Testing guideline distinguishes new projects from legacy ratchet adoption",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/TESTING_AND_QUALITY.md",
+      "tokens": [
+        "Neue Projekte",
+        "Legacy-Adoption und Ratchet",
+        "quality.coverage_minimum"
+      ]
+    },
+    {
       "id": "quality.coverage.minimum",
       "description": "Coverage gate is configured or explicitly excepted",
       "severity": "error",
