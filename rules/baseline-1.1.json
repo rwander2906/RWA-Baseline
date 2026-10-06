@@ -250,6 +250,20 @@
       ]
     },
     {
+      "id": "release.desktop.windows",
+      "description": "Windows desktop release contract and automated workflow are present or explicitly excepted",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": ".github/workflows/windows-desktop-release.yml",
+      "tokens": [
+        "windows-latest",
+        "requirements-build.txt",
+        "Smoke test executable",
+        "actions/upload-artifact@v6",
+        "docs/user"
+      ]
+    },
+    {
       "id": "security.secret_files",
       "description": "No obvious secret files are tracked",
       "severity": "error",

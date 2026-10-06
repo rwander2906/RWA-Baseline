@@ -48,6 +48,22 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn("docs/adr/0000-template.md", files)
             self.assertIn("## Components and Responsibilities", files["docs/ARCHITECTURE.md"])
 
+    def test_python_desktop_profile_generates_release_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "Desktop App"
+            args = SimpleNamespace(target=target, name="Desktop App", profile="python-desktop")
+            files = MODULE.generated_files(args)
+
+            self.assertIn("desktop.spec", files)
+            self.assertIn("VERSION", files)
+            self.assertIn("requirements-build.txt", files)
+            self.assertIn("pyinstaller==", files["requirements-build.txt"])
+            self.assertIn(".github/workflows/windows-desktop-release.yml", files)
+            self.assertIn("windows-latest", files[".github/workflows/windows-desktop-release.yml"])
+            self.assertIn("Smoke test executable", files[".github/workflows/windows-desktop-release.yml"])
+            self.assertIn("docs/WINDOWS_DESKTOP_RELEASE.md", files)
+            self.assertIn("docs/user", files[".github/workflows/windows-desktop-release.yml"])
+
     def test_node_profile_generates_package_json(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             target = Path(temp) / "My App"

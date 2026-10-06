@@ -1,0 +1,49 @@
+name: Windows Desktop Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install locked build dependencies
+        run: python -m pip install -r requirements-build.txt
+      - name: Validate user documentation
+        run: python scripts/check_user_documentation.py .
+      - name: Resolve release version
+        shell: pwsh
+        run: |
+          $version = (Get-Content VERSION -Raw).Trim()
+          if (-not $version) { throw "VERSION is empty" }
+          "RELEASE_VERSION=$version" >> $env:GITHUB_ENV
+      - name: Build executable
+        run: pyinstaller --clean --noconfirm desktop.spec
+      - name: Smoke test executable
+        shell: pwsh
+        run: |
+          & ".\dist\app.exe" --version
+          if ($LASTEXITCODE -ne 0) { throw "Executable smoke test failed" }
+      - name: Assemble user package
+        shell: pwsh
+        run: |
+          $package = "release\app-$env:RELEASE_VERSION-windows"
+          New-Item -ItemType Directory -Force -Path $package | Out-Null
+          Copy-Item ".\dist\app.exe" "$package\app.exe"
+          Copy-Item "docs/user" "$package\\docs" -Recurse
+          Compress-Archive -Path "$package\*" -DestinationPath "$package.zip"
+      - uses: actions/upload-artifact@v6
+        with:
+          name: app-${{ env.RELEASE_VERSION }}-windows
+          path: release/app-${{ env.RELEASE_VERSION }}-windows.zip
+          if-no-files-found: error

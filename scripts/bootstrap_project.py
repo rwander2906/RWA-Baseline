@@ -143,6 +143,75 @@ jobs:
       - run: coverage report --fail-under=80
 """,
     },
+    "python-desktop": {
+        ".github/dependabot.yml": """version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+""",
+        ".python-version": "3.12\
+",
+        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\
+",
+        "requirements-dev.txt": "coverage==7.10.7\
+ruff==0.14.0\
+radon==6.0.1\
+",
+        "requirements-build.txt": "pyinstaller==6.16.0\
+",
+        "VERSION": "0.1.0\
+",
+        "desktop.spec": "__RWA_DESKTOP_SPEC__",
+        ".github/workflows/windows-desktop-release.yml": "__RWA_WINDOWS_RELEASE_WORKFLOW__",
+        "docs/WINDOWS_DESKTOP_RELEASE.md": "__RWA_WINDOWS_DESKTOP_DOC__",
+        "src/main.py": """import argparse\
+\
+parser = argparse.ArgumentParser()\
+parser.add_argument("--version", action="store_true")\
+args = parser.parse_args()\
+if args.version:\
+    print("0.1.0")\
+""",
+        "tests/test_smoke.py": """import unittest\
+\
+class SmokeTest(unittest.TestCase):\
+    def test_bootstrap(self):\
+        self.assertTrue(True)\
+""",
+        ".github/workflows/ci.yml": """name: CI
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: radon cc . --min C --show-complexity --total-average
+      - run: python -m compileall -q .
+      - run: coverage run -m unittest discover -s tests -v
+      - run: coverage report --fail-under=80
+""",
+    },
     "node": {
         ".nvmrc": "22\n",
         ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\n",
@@ -334,6 +403,11 @@ See `docs/ARCHITECTURE.md` for system context, components, data flows, external 
         files[path] = render(template)
     for path, template in PROFILE_FILES[args.profile].items():
         files[path] = render(template)
+
+    if args.profile == "python-desktop":
+        files["desktop.spec"] = load_baseline_template("templates/python-desktop/desktop.spec")
+        files[".github/workflows/windows-desktop-release.yml"] = load_baseline_template(".github/workflows/windows-desktop-release.yml")
+        files["docs/WINDOWS_DESKTOP_RELEASE.md"] = load_baseline_template("docs/WINDOWS_DESKTOP_RELEASE.md")
 
     return files
 
