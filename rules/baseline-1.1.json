@@ -137,6 +137,53 @@
       ]
     },
     {
+      "id": "build.runtime.version",
+      "description": "Runtime/tool version is pinned for a supported project profile",
+      "severity": "error",
+      "check": "any_file_contains",
+      "paths": [
+        ".python-version",
+        ".nvmrc"
+      ],
+      "tokens": [
+        "3.12",
+        "22"
+      ]
+    },
+    {
+      "id": "build.config.example",
+      "description": "Example configuration exists without committing secrets",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".env.example"
+    },
+    {
+      "id": "build.reproducible.dependencies",
+      "description": "Dependency installation uses a reproducible manifest or lock contract",
+      "severity": "error",
+      "check": "any_file_contains",
+      "paths": [
+        "requirements-dev.txt",
+        "package-lock.json"
+      ],
+      "tokens": [
+        "==",
+        "lockfileVersion"
+      ]
+    },
+    {
+      "id": "build.migrations",
+      "description": "Project guidelines require versioned migrations instead of undocumented manual schema/data changes",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/PROJECT_GUIDELINES.md",
+      "tokens": [
+        "Reproducible Project Entry",
+        "versioned migrations",
+        "manual production changes"
+      ]
+    },
+    {
       "id": "security.secret_files",
       "description": "No obvious secret files are tracked",
       "severity": "error",
