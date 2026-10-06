@@ -4,12 +4,17 @@ import re, sys
 from pathlib import Path
 
 LINK_RE = re.compile(r"!?\[[^]]*\]\(([^)]+)\)")
-REQUIRED = ["## Installation und Start","## Bedienung","## Konfiguration","## Fehler und Support","## Version und Gültigkeit"]\nFORBIDDEN_SECRET_NAMES = {".env", "id_rsa", "id_ed25519"}\nFORBIDDEN_SECRET_SUFFIXES = {".pem", ".key"}
+REQUIRED = ["## Installation und Start","## Bedienung","## Konfiguration","## Fehler und Support","## Version und Gültigkeit"]
+FORBIDDEN_SECRET_NAMES = {".env", "id_rsa", "id_ed25519"}
+FORBIDDEN_SECRET_SUFFIXES = {".pem", ".key"}
 
 def validate(root: Path) -> list[str]:
     guide=root/"docs/user/README.md"; errors=[]
     if not guide.is_file(): return ["missing docs/user/README.md"]
-    for candidate in (root/"docs/user").rglob("*"):\n        if candidate.is_file() and (candidate.name in FORBIDDEN_SECRET_NAMES or candidate.suffix.lower() in FORBIDDEN_SECRET_SUFFIXES):\n            errors.append(f"forbidden secret-like file in user documentation: {candidate.relative_to(root)}")\n    text=guide.read_text(encoding="utf-8")
+    for candidate in (root/"docs/user").rglob("*"):
+        if candidate.is_file() and (candidate.name in FORBIDDEN_SECRET_NAMES or candidate.suffix.lower() in FORBIDDEN_SECRET_SUFFIXES):
+            errors.append(f"forbidden secret-like file in user documentation: {candidate.relative_to(root)}")
+    text=guide.read_text(encoding="utf-8")
     errors += [f"missing section: {x}" for x in REQUIRED if x not in text]
     for md in (root/"docs/user").rglob("*.md"):
         body=md.read_text(encoding="utf-8")
