@@ -13,6 +13,6 @@ class UserDocumentationGateTests(unittest.TestCase):
         td,root=self.project(); self.addCleanup(td.cleanup); self.assertEqual([],validate(root))
     def test_missing_reference_blocks_release(self):
         td,root=self.project(); self.addCleanup(td.cleanup); (root/"docs/user/README.md").write_text(GUIDE+"\\n![UI](screenshots/missing.png)\\n",encoding="utf-8"); self.assertTrue(any("missing local reference" in x for x in validate(root)))
-    def test_screenshot_outside_canonical_folder_blocks_release(self):
+    def test_secret_like_file_blocks_release(self):\n        td,root=self.project(); self.addCleanup(td.cleanup); (root/"docs/user/example.key").write_text("secret",encoding="utf-8"); self.assertTrue(any("forbidden secret-like file" in x for x in validate(root)))\n    def test_screenshot_outside_canonical_folder_blocks_release(self):
         td,root=self.project(); self.addCleanup(td.cleanup); (root/"docs/user/ui.png").write_bytes(b"x"); (root/"docs/user/README.md").write_text(GUIDE+"\\n![UI](ui.png)\\n",encoding="utf-8"); self.assertTrue(any("screenshot outside" in x for x in validate(root)))
 if __name__=="__main__": unittest.main()
