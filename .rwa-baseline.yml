@@ -11,9 +11,6 @@ quality:
   warnings_allowed: 0
 
 exceptions:
-  - rule: "docs.user.guide"
-    value: null
-    reason: "Baseline repository is the policy/template source rather than an end-user application; generated application projects receive the mandatory user guide."
   - rule: "quality.coverage.minimum"
     value: null
     reason: "Repository contains policy, templates and validation tooling; no application runtime yet."
