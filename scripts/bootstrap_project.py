@@ -99,7 +99,9 @@ updates:
     schedule:
       interval: "weekly"
 """,
-        "requirements-dev.txt": "coverage\nruff\nradon\n",
+        ".python-version": "3.12\\n",
+        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\\n",
+        "requirements-dev.txt": "coverage==7.10.7\\nruff==0.14.0\\nradon==6.0.1\\n",
         "tests/test_smoke.py": '''"""Initial bootstrap smoke test."""
 
 import unittest
