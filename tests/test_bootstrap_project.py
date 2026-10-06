@@ -27,8 +27,7 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn("requirements-dev.txt", files)
             self.assertIn(".python-version", files)
-            self.assertEqual(files[".python-version"], "3.12
-")
+            self.assertEqual(files[".python-version"], "3.12\\n")
             self.assertIn(".env.example", files)
             self.assertIn("coverage==", files["requirements-dev.txt"])
             self.assertNotIn("coverage
@@ -58,8 +57,7 @@ class BootstrapProjectTests(unittest.TestCase):
 
             self.assertIn("package.json", files)
             self.assertIn(".nvmrc", files)
-            self.assertEqual(files[".nvmrc"], "22
-")
+            self.assertEqual(files[".nvmrc"], "22\\n")
             self.assertIn(".env.example", files)
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn('"name": "my-app"', files["package.json"])
