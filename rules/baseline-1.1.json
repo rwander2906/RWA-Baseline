@@ -16,6 +16,45 @@
       "path": "README.md"
     },
     {
+      "id": "docs.readme.handover",
+      "description": "README contains the minimum developer handover sections",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "README.md",
+      "tokens": [
+        "## Purpose",
+        "## Prerequisites",
+        "## Installation",
+        "## Configuration",
+        "## Start",
+        "## Tests",
+        "## Build",
+        "## Architecture"
+      ]
+    },
+    {
+      "id": "docs.architecture.handover",
+      "description": "Architecture documentation contains the minimum handover structure",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/ARCHITECTURE.md",
+      "tokens": [
+        "## System Context",
+        "## Components and Responsibilities",
+        "## Data Flows and Persistence",
+        "## External Systems",
+        "## Runtime and Deployment",
+        "## Architecture Decisions"
+      ]
+    },
+    {
+      "id": "docs.adr",
+      "description": "Architecture decision record guidance is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "docs/adr/README.md"
+    },
+    {
       "id": "docs.changelog",
       "description": "CHANGELOG is present",
       "severity": "error",

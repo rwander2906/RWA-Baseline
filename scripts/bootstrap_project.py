@@ -31,7 +31,53 @@ exceptions: []
 """,
     "docs/ARCHITECTURE.md": """# Architecture
 
-Describe system context, major components, data flows, persistence, external dependencies and relevant deployment/runtime boundaries.
+## System Context
+
+Describe the purpose, users/actors and system boundary.
+
+## Components and Responsibilities
+
+Describe major components and their responsibilities.
+
+## Data Flows and Persistence
+
+Describe important data flows, state and persistence.
+
+## External Systems
+
+Describe external services, APIs and integrations.
+
+## Runtime and Deployment
+
+Describe relevant runtime, deployment and operational boundaries.
+
+## Architecture Decisions
+
+Long-lived decisions that are not obvious from the code are recorded in `docs/adr/`.
+""",
+    "docs/adr/README.md": """# Architecture Decision Records
+
+Record decisions here when they have long-term consequences or when a future maintainer would otherwise have to rediscover the rationale. Do not create ADRs for routine implementation details.
+
+Use `0000-template.md` as a starting point.
+""",
+    "docs/adr/0000-template.md": """# ADR-NNNN: Decision title
+
+## Status
+
+Proposed | Accepted | Superseded
+
+## Context
+
+What problem or constraint requires a decision?
+
+## Decision
+
+What was decided?
+
+## Consequences
+
+What becomes easier, harder or constrained by this decision?
 """,
     "docs/PROJECT_GUIDELINES.md": """# Project Guidelines
 
@@ -207,6 +253,38 @@ def generated_files(args: argparse.Namespace) -> dict[str, str]:
         "README.md": f"""# {name}
 
 Project initialized from RWA Baseline {BASELINE_VERSION}.
+
+## Purpose
+
+Describe what this project does, who it serves and the problem it solves.
+
+## Prerequisites
+
+Document required runtimes, tools, services and access prerequisites.
+
+## Installation
+
+Document the reproducible setup from a fresh clone to an installed development environment.
+
+## Configuration
+
+Document required configuration, environment variables, secrets handling and example configuration.
+
+## Start
+
+Document how to start the application or service locally.
+
+## Tests
+
+Document how to run the test suite and any relevant test prerequisites.
+
+## Build
+
+Document how to create the distributable or deployment artifact.
+
+## Architecture
+
+See `docs/ARCHITECTURE.md` for system context, components, data flows, external systems, runtime/deployment and architecture decisions.
 
 ## Development
 
