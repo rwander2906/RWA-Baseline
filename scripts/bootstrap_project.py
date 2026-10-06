@@ -143,7 +143,7 @@ jobs:
       - run: coverage report --fail-under=80
 """,
     },
-    "node": {
+    "python-desktop": {\n        ".github/dependabot.yml": """version: 2\nupdates:\n  - package-ecosystem: "pip"\n    directory: "/"\n    schedule:\n      interval: "weekly"\n  - package-ecosystem: "github-actions"\n    directory: "/"\n    schedule:\n      interval: "weekly"\n""",\n        ".python-version": "3.12\\n",\n        ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\\n",\n        "requirements-dev.txt": "coverage==7.10.7\\nruff==0.14.0\\nradon==6.0.1\\n",\n        "requirements-build.txt": "pyinstaller==6.16.0\\n",\n        "VERSION": "0.1.0\\n",\n        "desktop.spec": load_baseline_template("templates/python-desktop/desktop.spec"),\n        ".github/workflows/windows-desktop-release.yml": load_baseline_template(".github/workflows/windows-desktop-release.yml"),\n        "docs/WINDOWS_DESKTOP_RELEASE.md": load_baseline_template("docs/WINDOWS_DESKTOP_RELEASE.md"),\n        "src/main.py": """import argparse\\n\\nparser = argparse.ArgumentParser()\\nparser.add_argument("--version", action="store_true")\\nargs = parser.parse_args()\\nif args.version:\\n    print("0.1.0")\\n""",\n        "tests/test_smoke.py": """import unittest\\n\\nclass SmokeTest(unittest.TestCase):\\n    def test_bootstrap(self):\\n        self.assertTrue(True)\\n""",\n        ".github/workflows/ci.yml": PROFILE_FILES["python"][".github/workflows/ci.yml"],\n    },\n    "node": {
         ".nvmrc": "22\n",
         ".env.example": "# Copy to .env locally if configuration is required. Never commit secrets.\n",
         ".github/dependabot.yml": """version: 2
