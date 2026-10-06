@@ -254,6 +254,38 @@ def generated_files(args: argparse.Namespace) -> dict[str, str]:
 
 Project initialized from RWA Baseline {BASELINE_VERSION}.
 
+## Purpose
+
+Describe what this project does, who it serves and the problem it solves.
+
+## Prerequisites
+
+Document required runtimes, tools, services and access prerequisites.
+
+## Installation
+
+Document the reproducible setup from a fresh clone to an installed development environment.
+
+## Configuration
+
+Document required configuration, environment variables, secrets handling and example configuration.
+
+## Start
+
+Document how to start the application or service locally.
+
+## Tests
+
+Document how to run the test suite and any relevant test prerequisites.
+
+## Build
+
+Document how to create the distributable or deployment artifact.
+
+## Architecture
+
+See `docs/ARCHITECTURE.md` for system context, components, data flows, external systems, runtime/deployment and architecture decisions.
+
 ## Development
 
 - work starts with a GitHub Issue
