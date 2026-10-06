@@ -27,16 +27,23 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn("requirements-dev.txt", files)
             self.assertIn(".python-version", files)
-            self.assertEqual(files[".python-version"], "3.12\n")
+            self.assertEqual(files[".python-version"], "3.12
+")
             self.assertIn(".env.example", files)
             self.assertIn("coverage==", files["requirements-dev.txt"])
-            self.assertNotIn("coverage\n", files["requirements-dev.txt"])
+            self.assertNotIn("coverage
+", files["requirements-dev.txt"])
             self.assertIn('language: "python"', files[".rwa-baseline.yml"])
             self.assertIn("radon cc . --min C", files[".github/workflows/ci.yml"])
             self.assertIn("ruff check .", files[".github/workflows/ci.yml"])
             for heading in ("## Purpose", "## Prerequisites", "## Installation", "## Configuration", "## Start", "## Tests", "## Build", "## Architecture"):
                 self.assertIn(heading, files["README.md"])
-            self.assertIn("docs/TESTING_AND_QUALITY.md", files)\n            self.assertIn("docs/USER_DOCUMENTATION.md", files)\n            self.assertIn("docs/user/README.md", files)\n            self.assertIn("docs/user/screenshots/.gitkeep", files)\n            self.assertIn(".github/workflows/release-documentation-gate.yml", files)\n            self.assertIn("scripts/check_user_documentation.py", files)
+            self.assertIn("docs/TESTING_AND_QUALITY.md", files)
+            self.assertIn("docs/USER_DOCUMENTATION.md", files)
+            self.assertIn("docs/user/README.md", files)
+            self.assertIn("docs/user/screenshots/.gitkeep", files)
+            self.assertIn(".github/workflows/release-documentation-gate.yml", files)
+            self.assertIn("scripts/check_user_documentation.py", files)
             self.assertIn("Verhalten vor Kennzahl", files["docs/TESTING_AND_QUALITY.md"])
             self.assertIn("Legacy-Adoption und Ratchet", files["docs/TESTING_AND_QUALITY.md"])
             self.assertIn("docs/adr/README.md", files)
@@ -51,7 +58,8 @@ class BootstrapProjectTests(unittest.TestCase):
 
             self.assertIn("package.json", files)
             self.assertIn(".nvmrc", files)
-            self.assertEqual(files[".nvmrc"], "22\n")
+            self.assertEqual(files[".nvmrc"], "22
+")
             self.assertIn(".env.example", files)
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn('"name": "my-app"', files["package.json"])
