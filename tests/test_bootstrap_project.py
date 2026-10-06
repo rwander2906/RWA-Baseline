@@ -30,8 +30,7 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertEqual(files[".python-version"], "3.12\\n")
             self.assertIn(".env.example", files)
             self.assertIn("coverage==", files["requirements-dev.txt"])
-            self.assertNotIn("coverage
-", files["requirements-dev.txt"])
+            self.assertNotIn("coverage\\n", files["requirements-dev.txt"])
             self.assertIn('language: "python"', files[".rwa-baseline.yml"])
             self.assertIn("radon cc . --min C", files[".github/workflows/ci.yml"])
             self.assertIn("ruff check .", files[".github/workflows/ci.yml"])
