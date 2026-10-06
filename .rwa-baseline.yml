@@ -11,6 +11,9 @@ quality:
   warnings_allowed: 0
 
 exceptions:
+  - rule: "release.desktop.windows"
+    value: null
+    reason: "Baseline repository defines and tests the desktop release capability; only adopting desktop applications execute the generated packaging workflow."
   - rule: "quality.coverage.minimum"
     value: null
     reason: "Repository contains policy, templates and validation tooling; no application runtime yet."
