@@ -56,13 +56,3 @@ jobs:
           test -n "$ISSUE" || exit 0
           python scripts/publish_ai_review_issue_comment.py --result ai-review-result.json --decision ai-review-decision.json --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --sha "${{ github.event.pull_request.head.sha }}" --output ai-review-comment.md
           gh issue comment "$ISSUE" --body-file ai-review-comment.md
-      - uses: actions/upload-artifact@v6
-        if: always()
-        with:
-          name: ai-code-review-${{ github.event.pull_request.number }}
-          path: |
-            ai-review-package.json
-            ai-review-result.json
-            ai-review-decision.json
-          if-no-files-found: ignore
-          retention-days: 14
