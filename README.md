@@ -37,7 +37,7 @@ Die Baseline folgt Semantic Versioning:
 - MINOR: neue oder verschärfte Regeln, die Adoption-Arbeit erzeugen können
 - MAJOR: grundlegende Änderungen am Entwicklungsmodell
 
-Aktueller stabiler Stand: **1.1.0**.
+Aktueller stabiler Stand: **1.2.0**.
 
 ## Nutzung in Projekten
 
@@ -45,7 +45,7 @@ Jedes Projekt erhält eine `.rwa-baseline.yml`, z. B.:
 
 ```yaml
 baseline:
-  version: "1.1.0"
+  version: "1.2.0"
   adopted: "2026-10-05"
 
 profile:
