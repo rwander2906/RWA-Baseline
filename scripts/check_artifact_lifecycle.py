@@ -19,10 +19,10 @@ def inspect_workflow(text: str, filename: str) -> list[str]:
             continue
         # A marker must be within this step, not an unrelated workflow comment.
         start = index
-        while start > 0 and not re.match(r"^\\s*-\\s*(?:name:|uses:)\\s*", lines[start]):
+        while start > 0 and not re.match(r"^\s*-\s*(?:name:|uses:)\s*", lines[start]):
             start -= 1
         end = index + 1
-        while end < len(lines) and not re.match(r"^\\s*-\\s*(?:name:|uses:)\\s*", lines[end]):
+        while end < len(lines) and not re.match(r"^\s*-\s*(?:name:|uses:)\s*", lines[end]):
             end += 1
         # Include only contiguous comments immediately above this step.
         comment_start = start
