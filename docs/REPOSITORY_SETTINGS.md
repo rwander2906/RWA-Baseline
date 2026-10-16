@@ -47,9 +47,12 @@ Da GitHub diese Einstellung repositoryweit anwendet, kann auch der persistente I
 
 Der Workflow:
 
-- reagiert ausschließlich auf erfolgreich gemergte Pull Requests von `staging` nach `main`
-- prüft zuerst, ob `staging` noch existiert
+- reagiert auf erfolgreich gemergte Pull Requests von `staging` nach `main` und kann bei Bedarf manuell ausgelöst werden
+- wartet kurz auf die GitHub-Auto-Delete-Aktion und prüft, ob `staging` noch existiert
 - legt `staging` nur bei Bedarf am gerade nach `main` promoteten Commit neu an
 - verändert das Auto-Delete-Verhalten für Issue- und Feature-Branches nicht
 
 Der Bootstrap übernimmt diesen Workflow automatisch in neue Projekte. Dafür benötigt der Workflow `contents: write`; alle übrigen Baseline-Workflows behalten ihre minimal erforderlichen Berechtigungen.
+
+
+Der Restore-Workflow ist ein Recovery-Mechanismus; er ersetzt keinen Branch-Schutz. Nach Promotion muss der Branch weiterhin geprüft werden. Ist die Wiederherstellung wegen fehlender Rechte oder GitHub-Race-Conditions fehlgeschlagen, darf keine weitere Promotion beginnen, bevor `staging` kontrolliert wiederhergestellt wurde.
