@@ -1,4 +1,5 @@
 version: 2
+# Dependency updates are validated on staging before promotion to main.
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
