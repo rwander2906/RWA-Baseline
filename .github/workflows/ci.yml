@@ -35,3 +35,6 @@ jobs:
 
       - name: Check baseline repository compliance
         run: python scripts/check_project_compliance.py .
+
+      - name: Enforce Actions artifact lifecycle
+        run: python scripts/check_artifact_lifecycle.py .

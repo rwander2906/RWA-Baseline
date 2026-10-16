@@ -42,8 +42,12 @@ jobs:
           Copy-Item ".\dist\app.exe" "$package\app.exe"
           Copy-Item "docs/user" "$package\\docs" -Recurse
           Compress-Archive -Path "$package\*" -DestinationPath "$package.zip"
+      # artifact-lifecycle: diagnostic
+      # On-demand download only; routine main builds must not fill Actions Storage.
       - uses: actions/upload-artifact@v6
+        if: github.event_name == 'workflow_dispatch'
         with:
           name: app-${{ env.RELEASE_VERSION }}-windows
           path: release/app-${{ env.RELEASE_VERSION }}-windows.zip
           if-no-files-found: error
+          retention-days: 1
