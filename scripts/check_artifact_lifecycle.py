@@ -19,13 +19,16 @@ def inspect_workflow(text: str, filename: str) -> list[str]:
             continue
         # A marker must be within this step, not an unrelated workflow comment.
         start = index
-        while start > 0 and not re.match(r"^\s*-\s*(?:name:|uses:)\s*", lines[start - 1]):
+        while start > 0 and not re.match(r"^\\s*-\\s*(?:name:|uses:)\\s*", lines[start]):
             start -= 1
         end = index + 1
-        while end < len(lines) and not re.match(r"^\s*-\s*(?:name:|uses:)\s*", lines[end]):
+        while end < len(lines) and not re.match(r"^\\s*-\\s*(?:name:|uses:)\\s*", lines[end]):
             end += 1
-        # Comments just above the step are allowed.
-        chunk = "\n".join(lines[max(0, start - 3):end])
+        # Include only contiguous comments immediately above this step.
+        comment_start = start
+        while comment_start > 0 and lines[comment_start - 1].lstrip().startswith("#"):
+            comment_start -= 1
+        chunk = "\n".join(lines[comment_start:end])
         context = f"{filename}:{index + 1}"
         if not JUSTIFICATION.search(chunk):
             findings.append(f"{context}: missing # artifact-lifecycle: cross-job|diagnostic")
