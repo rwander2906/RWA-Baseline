@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0 - 2026-10-16
+
+### Added
+- API-basierter Review-Vertrag, Review-Harness und dokumentierte Issue-Review-Historie (vorerst mit Fake-Provider, echter AI-Provider noch nicht abgenommen).
+- Anwenderdokumentations-Gate und Windows-Desktop-Release-Vorlagen.
+- Artifact-Lifecycle-Policy mit CI-Prüfung gegen unnötige/lang gespeicherte Actions-Artefakte.
+- Sicherung des persistenten staging-Branches durch Recovery-Workflow.
+- Human-Maintainability-Anforderungen und Dokumentationshilfen als kompatible Engineering-Erweiterungen.
+
+### Changed
+- Dependabot zielt auf staging; Production-Promotion bleibt freigabepflichtig.
+- Temporäre Windows-Artefakte nur bei manuell angeforderter Diagnose, Retention 1 Tag.
+
+### Migration
+- Machine-readable migration manifest: `migrations/1.2.0.json`.
+- Projektspezifische Anpassungen für Dokumentations-Gates, Actions-Uploads und staging-Branch-Sicherung prüfen.
+- AI-Review bleibt ohne echten Provider ein optionales/advisory Gate, nicht als produktive KI-Prüfung ausgeben.
+
+
 ## 1.1.0 - 2026-10-05
 
 ### Added

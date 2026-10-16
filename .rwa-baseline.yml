@@ -1,6 +1,6 @@
 baseline:
-  version: "1.1.0"
-  adopted: "2026-10-05"
+  version: "1.2.0"
+  adopted: "2026-10-16"
 
 profile:
   language: "baseline"
@@ -11,9 +11,36 @@ quality:
   warnings_allowed: 0
 
 exceptions:
+  - rule: "release.desktop.windows"
+    value: null
+    reason: "Baseline repository defines and tests the desktop release capability; only adopting desktop applications execute the generated packaging workflow."
   - rule: "quality.coverage.minimum"
     value: null
     reason: "Repository contains policy, templates and validation tooling; no application runtime yet."
   - rule: "quality.complexity.maximum"
     value: null
     reason: "No application runtime; complexity threshold becomes relevant for bootstrap/compliance tooling."
+  - rule: "docs.human_maintainability"
+    value: null
+    reason: "The baseline repository is the source of the project guidelines; generated/adopting application projects carry the explicit Human Maintainability contract in docs/PROJECT_GUIDELINES.md."
+  - rule: "docs.readme.handover"
+    value: null
+    reason: "The baseline repository is the policy/template source rather than an application project; generated/adopting projects must provide the operational README handover sections."
+  - rule: "docs.architecture.handover"
+    value: null
+    reason: "The baseline repository has no application architecture/runtime; generated/adopting projects must document their architecture handover structure."
+  - rule: "docs.adr"
+    value: null
+    reason: "The baseline repository defines ADR policy/templates for application projects; project-specific architecture decisions belong to adopting repositories."
+  - rule: "build.runtime.version"
+    value: null
+    reason: "Baseline repository defines runtime-version requirements for generated application profiles; it is not itself an application runtime."
+  - rule: "build.config.example"
+    value: null
+    reason: "Baseline repository contains no application configuration or runtime secrets; generated projects must provide .env.example."
+  - rule: "build.reproducible.dependencies"
+    value: null
+    reason: "Baseline repository is policy/template tooling without an application dependency contract; generated profiles must pin or lock dependencies."
+  - rule: "build.migrations"
+    value: null
+    reason: "Baseline repository has no application schema or persisted domain data; generated projects carry the migration contract in PROJECT_GUIDELINES.md."

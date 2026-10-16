@@ -1,7 +1,9 @@
 version: 2
+# Dependency updates are validated on staging before promotion to main.
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "staging"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 5

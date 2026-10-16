@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rwa://schemas/ai-review-result-v1",
+  "title": "RWA AI Review Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "verdict",
+    "summary",
+    "findings",
+    "reviewer"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "verdict": {
+      "enum": [
+        "PASS",
+        "WARN",
+        "BLOCK"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "severity",
+          "message",
+          "location"
+        ],
+        "properties": {
+          "severity": {
+            "enum": [
+              "INFO",
+              "WARN",
+              "BLOCK"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rule_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "location": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "line": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter",
+        "model"
+      ],
+      "properties": {
+        "adapter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_review_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

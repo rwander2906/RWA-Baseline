@@ -1,0 +1,344 @@
+{
+  "baseline_version": "1.2.0",
+  "rules": [
+    {
+      "id": "meta.baseline.file",
+      "description": "Project declares its adopted RWA Baseline in .rwa-baseline.yml",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".rwa-baseline.yml"
+    },
+    {
+      "id": "docs.readme",
+      "description": "README is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "README.md"
+    },
+    {
+      "id": "docs.readme.handover",
+      "description": "README contains the minimum developer handover sections",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "README.md",
+      "tokens": [
+        "## Purpose",
+        "## Prerequisites",
+        "## Installation",
+        "## Configuration",
+        "## Start",
+        "## Tests",
+        "## Build",
+        "## Architecture"
+      ]
+    },
+    {
+      "id": "docs.architecture.handover",
+      "description": "Architecture documentation contains the minimum handover structure",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/ARCHITECTURE.md",
+      "tokens": [
+        "## System Context",
+        "## Components and Responsibilities",
+        "## Data Flows and Persistence",
+        "## External Systems",
+        "## Runtime and Deployment",
+        "## Architecture Decisions"
+      ]
+    },
+    {
+      "id": "docs.adr",
+      "description": "Architecture decision record guidance is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "docs/adr/README.md"
+    },
+    {
+      "id": "docs.changelog",
+      "description": "CHANGELOG is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "id": "docs.architecture",
+      "description": "Architecture documentation is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "docs/ARCHITECTURE.md"
+    },
+    {
+      "id": "docs.user.guide",
+      "description": "User documentation entry point is present",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/user/README.md",
+      "tokens": [
+        "## Installation und Start",
+        "## Bedienung",
+        "## Konfiguration",
+        "## Fehler und Support",
+        "## Version und Gültigkeit"
+      ]
+    },
+    {
+      "id": "docs.user.policy",
+      "description": "User documentation and screenshot lifecycle policy is present",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/USER_DOCUMENTATION.md",
+      "tokens": [
+        "docs/user/screenshots/",
+        "GitHub Issue oder Subissue",
+        "exakten Dateinamen",
+        "Verwendungsstelle",
+        "Release-Gate"
+      ]
+    },
+    {
+      "id": "github.pr_template",
+      "description": "Pull request template is present",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".github/pull_request_template.md"
+    },
+    {
+      "id": "github.issue_templates",
+      "description": "At least one issue template is present",
+      "severity": "error",
+      "check": "glob_exists",
+      "path": ".github/ISSUE_TEMPLATE/*"
+    },
+    {
+      "id": "github.ci",
+      "description": "At least one CI workflow is present",
+      "severity": "error",
+      "check": "glob_exists",
+      "path": ".github/workflows/*.yml"
+    },
+    {
+      "id": "workflow.promotion_gate",
+      "description": "Promotion gate enforces promotion-approved for main",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": ".github/workflows/promotion-gate.yml",
+      "tokens": [
+        "promotion-approved",
+        "github.base_ref == 'main'"
+      ]
+    },
+    {
+      "id": "quality.testing.behavior",
+      "description": "Testing guideline defines behavior-focused test semantics",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/TESTING_AND_QUALITY.md",
+      "tokens": [
+        "Verhalten vor Kennzahl",
+        "Normalfall",
+        "Fehler- und Negativfälle",
+        "relevante Grenzwerte",
+        "Regressionstest"
+      ]
+    },
+    {
+      "id": "quality.testing.isolation",
+      "description": "Testing guideline requires deterministic isolation from production services and credentials",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/TESTING_AND_QUALITY.md",
+      "tokens": [
+        "Tests sind deterministisch",
+        "produktiven externen Diensten",
+        "produktiven Credentials"
+      ]
+    },
+    {
+      "id": "quality.testing.adoption",
+      "description": "Testing guideline distinguishes new projects from legacy ratchet adoption",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/TESTING_AND_QUALITY.md",
+      "tokens": [
+        "Neue Projekte",
+        "Legacy-Adoption und Ratchet",
+        "quality.coverage_minimum"
+      ]
+    },
+    {
+      "id": "quality.coverage.minimum",
+      "description": "Coverage gate is configured or explicitly excepted",
+      "severity": "error",
+      "check": "glob_contains_any",
+      "path": ".github/workflows/*.yml",
+      "tokens": [
+        "fail-under",
+        "coverage report",
+        "pytest --cov",
+        "--cov-fail-under"
+      ]
+    },
+    {
+      "id": "quality.complexity.maximum",
+      "description": "Complexity gate is configured or explicitly excepted",
+      "severity": "error",
+      "check": "glob_contains_any",
+      "path": ".github/workflows/*.yml",
+      "tokens": [
+        "complexity",
+        "radon",
+        "lizard"
+      ]
+    },
+    {
+      "id": "security.ci.least_privilege",
+      "description": "CI workflows declare read-only contents permission",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": ".github/workflows/ci.yml",
+      "tokens": [
+        "permissions:",
+        "contents: read"
+      ]
+    },
+    {
+      "id": "build.runtime.version",
+      "description": "Runtime/tool version is pinned for a supported project profile",
+      "severity": "error",
+      "check": "any_file_contains",
+      "paths": [
+        ".python-version",
+        ".nvmrc"
+      ],
+      "tokens": [
+        "3.12",
+        "22"
+      ]
+    },
+    {
+      "id": "build.config.example",
+      "description": "Example configuration exists without committing secrets",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".env.example"
+    },
+    {
+      "id": "build.reproducible.dependencies",
+      "description": "Dependency installation uses a reproducible manifest or lock contract",
+      "severity": "error",
+      "check": "any_file_contains",
+      "paths": [
+        "requirements-dev.txt",
+        "package-lock.json"
+      ],
+      "tokens": [
+        "==",
+        "lockfileVersion"
+      ]
+    },
+    {
+      "id": "build.migrations",
+      "description": "Project guidelines require versioned migrations instead of undocumented manual schema/data changes",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/PROJECT_GUIDELINES.md",
+      "tokens": [
+        "Reproducible Project Entry",
+        "versioned migrations",
+        "manual production changes"
+      ]
+    },
+    {
+      "id": "release.desktop.windows",
+      "description": "Windows desktop release contract and automated workflow are present or explicitly excepted",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": ".github/workflows/windows-desktop-release.yml",
+      "tokens": [
+        "windows-latest",
+        "requirements-build.txt",
+        "Smoke test executable",
+        "actions/upload-artifact@v6",
+        "docs/user"
+      ]
+    },
+    {
+      "id": "security.secret_files",
+      "description": "No obvious secret files are tracked",
+      "severity": "error",
+      "check": "forbidden_globs",
+      "paths": [
+        ".env",
+        "*.pem",
+        "*.key",
+        "id_rsa",
+        "id_ed25519"
+      ]
+    },
+    {
+      "id": "docs.baseline_reference",
+      "description": "Project guidelines reference the RWA Baseline or an exception is documented",
+      "severity": "warning",
+      "check": "any_file_contains",
+      "paths": [
+        "README.md",
+        "docs/PROJECT_GUIDELINES.md",
+        "docs/CODING_GUIDELINES.md"
+      ],
+      "tokens": [
+        "RWA Baseline",
+        "RWA-Baseline"
+      ]
+    },
+    {
+      "id": "docs.human_maintainability",
+      "description": "Project guidelines explicitly preserve human maintainability without AI dependency",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": "docs/PROJECT_GUIDELINES.md",
+      "tokens": [
+        "Human Maintainability",
+        "without an AI service",
+        "Critical project knowledge"
+      ]
+    },
+    {
+      "id": "security.dependabot.config",
+      "description": "Automated dependency updates are configured",
+      "severity": "error",
+      "check": "file_exists",
+      "path": ".github/dependabot.yml"
+    },
+    {
+      "id": "workflow.dependabot.issue-tracker",
+      "description": "Dependabot pull requests are documented as backlog issues",
+      "severity": "error",
+      "check": "file_contains_all",
+      "path": ".github/workflows/dependabot-issue-tracker.yml",
+      "tokens": [
+        "pull_request_target",
+        "dependabot[bot]",
+        "issues: write",
+        "rwa-dependabot-pr"
+      ]
+    },
+    {
+      "id": "ci.artifact.lifecycle",
+      "description": "Document and validate Actions artifact lifecycle with a CI step",
+      "severity": "error",
+      "check": "glob_contains_any",
+      "path": ".github/workflows/*.yml",
+      "tokens": [
+        "check_artifact_lifecycle.py"
+      ]
+    },
+    {
+      "id": "docs.artifact.lifecycle",
+      "description": "Artifact lifecycle policy documented in project",
+      "severity": "error",
+      "check": "file_exists",
+      "path": "docs/ARTIFACT_LIFECYCLE.md"
+    }
+  ]
+}

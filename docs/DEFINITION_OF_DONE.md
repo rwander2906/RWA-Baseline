@@ -5,8 +5,10 @@ Eine Änderung ist abgeschlossen, wenn die jeweils relevanten Punkte erfüllt si
 - Issue, Scope und Akzeptanzkriterien sind erfüllt
 - Code ist verständlich strukturiert und folgt den Naming-Regeln
 - fachlich relevante Code-Dokumentation ist vorhanden
-- Tests wurden ergänzt oder angepasst
-- Bugfixes besitzen einen Regressionstest
+- fachlich geändertes Verhalten ist durch relevante Normal-, Fehler-/Negativ- und Grenzfälle automatisiert abgesichert
+- neue oder wesentlich geänderte Kernlogik ist besonders gründlich getestet; Coverage ersetzt keine fachlichen Assertions
+- Tests sind deterministisch und unabhängig von produktiven externen Diensten und Credentials
+- Bugfixes besitzen einen Regressionstest, der den ursprünglichen Fehler reproduzieren würde
 - Linting/statische Analyse ist grün
 - Compile/Syntaxprüfung ist grün, soweit anwendbar
 - Complexity-Gate bzw. dokumentiertes Ratchet ist grün
@@ -14,7 +16,11 @@ Eine Änderung ist abgeschlossen, wenn die jeweils relevanten Punkte erfüllt si
 - Dependency-/Security-Prüfung ist grün
 - Fehlerbehandlung wurde geprüft
 - Logging, Datenschutz und Secret-Schutz wurden geprüft
-- Dokumentation wurde angepasst
+- Developer-Dokumentation (README, Architektur und relevante ADRs) wurde bei Änderungen an Voraussetzungen, Konfiguration, Build/Start, Komponenten, Integrationen oder langfristigen Architekturentscheidungen aktualisiert
+- notwendiges Build-, Betriebs-, Konfigurations- und Migrationswissen ist im Repository nachvollziehbar; kein kritischer Schritt existiert ausschließlich als Chat-, Prompt- oder persönliches Wissen
+- die Änderung bleibt ohne KI-Dienst baubar, testbar, betreibbar und durch einen kompetenten Entwickler weiterentwickelbar
+- Anwenderdokumentation wurde bei sichtbaren Funktionsänderungen aktualisiert; erforderliche Screenshots sind aktuell und vollständig referenziert
+- Release-/Nutzerpakete enthalten die erforderliche Anwenderdokumentation ohne kundenspezifische Daten oder Secrets
 - CI ist vollständig grün
 - erforderliche manuelle Smoke-/Staging-Tests wurden durchgeführt und dokumentiert
 - keine unbegründete Baseline-Abweichung wurde eingeführt

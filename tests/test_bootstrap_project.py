@@ -26,7 +26,43 @@ class BootstrapProjectTests(unittest.TestCase):
             self.assertIn(".github/workflows/ci.yml", files)
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn("requirements-dev.txt", files)
+            self.assertIn(".python-version", files)
+            self.assertEqual(files[".python-version"], "3.12\n")
+            self.assertIn(".env.example", files)
+            self.assertIn("coverage==", files["requirements-dev.txt"])
+            self.assertNotIn("coverage\n", files["requirements-dev.txt"])
             self.assertIn('language: "python"', files[".rwa-baseline.yml"])
+            self.assertIn("radon cc . --min C", files[".github/workflows/ci.yml"])
+            self.assertIn("ruff check .", files[".github/workflows/ci.yml"])
+            for heading in ("## Purpose", "## Prerequisites", "## Installation", "## Configuration", "## Start", "## Tests", "## Build", "## Architecture"):
+                self.assertIn(heading, files["README.md"])
+            self.assertIn("docs/TESTING_AND_QUALITY.md", files)
+            self.assertIn("docs/USER_DOCUMENTATION.md", files)
+            self.assertIn("docs/user/README.md", files)
+            self.assertIn("docs/user/screenshots/.gitkeep", files)
+            self.assertIn(".github/workflows/release-documentation-gate.yml", files)
+            self.assertIn("scripts/check_user_documentation.py", files)
+            self.assertIn("Verhalten vor Kennzahl", files["docs/TESTING_AND_QUALITY.md"])
+            self.assertIn("Legacy-Adoption und Ratchet", files["docs/TESTING_AND_QUALITY.md"])
+            self.assertIn("docs/adr/README.md", files)
+            self.assertIn("docs/adr/0000-template.md", files)
+            self.assertIn("## Components and Responsibilities", files["docs/ARCHITECTURE.md"])
+
+    def test_python_desktop_profile_generates_release_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "Desktop App"
+            args = SimpleNamespace(target=target, name="Desktop App", profile="python-desktop")
+            files = MODULE.generated_files(args)
+
+            self.assertIn("desktop.spec", files)
+            self.assertIn("VERSION", files)
+            self.assertIn("requirements-build.txt", files)
+            self.assertIn("pyinstaller==", files["requirements-build.txt"])
+            self.assertIn(".github/workflows/windows-desktop-release.yml", files)
+            self.assertIn("windows-latest", files[".github/workflows/windows-desktop-release.yml"])
+            self.assertIn("Smoke test executable", files[".github/workflows/windows-desktop-release.yml"])
+            self.assertIn("docs/WINDOWS_DESKTOP_RELEASE.md", files)
+            self.assertIn("docs/user", files[".github/workflows/windows-desktop-release.yml"])
 
     def test_node_profile_generates_package_json(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -35,8 +71,15 @@ class BootstrapProjectTests(unittest.TestCase):
             files = MODULE.generated_files(args)
 
             self.assertIn("package.json", files)
+            self.assertIn(".nvmrc", files)
+            self.assertEqual(files[".nvmrc"], "22\n")
+            self.assertIn(".env.example", files)
             self.assertIn(".github/workflows/preserve-staging.yml", files)
             self.assertIn('"name": "my-app"', files["package.json"])
+            self.assertIn('"complexity": ["error", 12]', files["eslint.config.js"])
+            self.assertIn('"no-empty": "error"', files["eslint.config.js"])
+            self.assertIn("test:coverage", files["package.json"])
+            self.assertIn("npm run test:coverage", files[".github/workflows/ci.yml"])
 
     def test_existing_file_blocks_bootstrap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

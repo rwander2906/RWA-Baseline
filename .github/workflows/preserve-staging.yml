@@ -4,6 +4,7 @@ on:
   pull_request:
     types: [closed]
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,20 +12,22 @@ permissions:
 jobs:
   preserve-staging:
     name: Restore staging when promotion auto-delete removed it
-    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'staging'
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'staging' && github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     steps:
       - name: Restore staging from promoted main when missing
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          MAIN_SHA: ${{ github.event.pull_request.merge_commit_sha }}
         run: |
+          set -euo pipefail
+          sleep 15
           if gh api "repos/$REPO/git/ref/heads/staging" >/dev/null 2>&1; then
             echo "staging already exists; nothing to do."
             exit 0
           fi
 
+          MAIN_SHA=$(gh api "repos/$REPO/git/ref/heads/main" --jq '.object.sha')
           gh api "repos/$REPO/git/refs" \
             --method POST \
             -f ref='refs/heads/staging' \
