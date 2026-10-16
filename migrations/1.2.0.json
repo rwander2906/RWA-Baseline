@@ -1,0 +1,31 @@
+{
+  "version": "1.2.0",
+  "title": "Storage-efficient CI, documentation gates and sustainable handover",
+  "changes": [
+    {
+      "id": "ci.artifact.lifecycle",
+      "summary": "Audit uploads for justification and max 3-day retention.",
+      "checklist": "Adopt the artifact checker in CI; remove redundant uploads and explicitly justify cross-job artifacts."
+    },
+    {
+      "id": "docs.artifact.lifecycle",
+      "summary": "Document artifact publication and cleanup policy.",
+      "checklist": "Add docs/ARTIFACT_LIFECYCLE.md; prefer direct GitHub Releases over temporary Actions archives."
+    },
+    {
+      "id": "branch.staging.persistent",
+      "summary": "Preserve staging after promotion to main.",
+      "checklist": "Check staging protection and enable/test the preserve-staging workflow or a functionally equivalent mechanism."
+    },
+    {
+      "id": "docs.user.release",
+      "summary": "Validate user documentation and release packages where applicable.",
+      "checklist": "Adopt user documentation checks for shipped apps; for desktop packaging ensure Windows smoke tests and documented outputs."
+    },
+    {
+      "id": "review.ai.advisory",
+      "summary": "Optional provider-neutral review scaffold and issue dialog.",
+      "checklist": "Use advisory/fake provider by default until a real provider is configured, tested and explicitly approved."
+    }
+  ]
+}
