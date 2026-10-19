@@ -44,7 +44,7 @@ jobs:
           Compress-Archive -Path "$package\*" -DestinationPath "$package.zip"
       # artifact-lifecycle: diagnostic
       # On-demand download only; routine main builds must not fill Actions Storage.
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: github.event_name == 'workflow_dispatch'
         with:
           name: app-${{ env.RELEASE_VERSION }}-windows
